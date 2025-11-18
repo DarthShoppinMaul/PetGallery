@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b00ffbd-7a02-4a67-b8ea-3de55b5fc5ba" name="Changes" comment="" />
+    <list default="true" id="6b00ffbd-7a02-4a67-b8ea-3de55b5fc5ba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../pythonapi/googleauth.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/AddLocation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/pages/ManageLocation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/AddPet.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/pages/ManagePet.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,6 +80,7 @@
       <workItem from="1763425528808" duration="357000" />
       <workItem from="1763473115900" duration="333000" />
       <workItem from="1763474527530" duration="1810000" />
+      <workItem from="1763481694189" duration="3607000" />
     </task>
     <servers />
   </component>

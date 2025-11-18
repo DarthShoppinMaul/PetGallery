@@ -8,6 +8,7 @@ Routes:
     - GET /pets: List all pets
     - GET /pets/{pet_id}: Get specific pet details
     - POST /pets: Create new pet (with optional photo upload)
+    - PUT /pets/{pet_id}: Update existing pet (with optional photo upload)
     - PATCH /pets/{pet_id}/approve: Approve a pet
     - DELETE /pets/{pet_id}: Delete a pet
 """
@@ -114,6 +115,74 @@ def create_pet(
     db.commit()
     db.refresh(obj)
     return obj
+
+
+@router.put("/{pet_id}", response_model=PetOut, dependencies=[Depends(require_auth)])
+def update_pet(
+        pet_id: int,
+        name: str = Form(...),
+        species: str = Form(...),
+        age: int = Form(...),
+        description: str | None = Form(None),
+        location_id: int = Form(...),
+        photo: UploadFile | None = File(None),
+        db: Session = Depends(get_db),
+):
+    """
+    Update Existing Pet
+    -------------------
+    Update an existing pet's information with optional new photo upload.
+    Requires authentication.
+
+    Args:
+        pet_id: ID of the pet to update
+        name: Pet's name
+        species: Type of animal (dog, cat, etc.)
+        age: Pet's age in years
+        description: Detailed description (optional)
+        location_id: ID of the location where pet is housed
+        photo: New pet's photo file (optional, max 2MB). If not provided, keeps existing photo.
+
+    Returns:
+        PetOut: Updated pet object
+
+    Raises:
+        HTTPException 404: Pet not found
+
+    Note:
+        If photo is not provided, the existing photo URL is preserved.
+        If photo is provided, it replaces the old photo.
+    """
+    # Find the pet
+    pet = db.query(Pet).filter(Pet.pet_id == pet_id).first()
+    if not pet:
+        raise HTTPException(status_code=404, detail="Pet not found")
+
+    # Validate input with Pydantic
+    payload = PetCreate(
+        name=name, species=species, age=age, description=description, location_id=location_id
+    )
+
+    # Get absolute path to uploads directory
+    base_dir = Path(__file__).resolve().parent
+    upload_dir = os.getenv("UPLOAD_DIR") or str(base_dir / "uploads")
+    max_mb = int(os.getenv("MAX_UPLOAD_MB", "2"))
+
+    # Handle photo upload if provided
+    photo_url = pet.photo_url  # Keep existing photo by default
+    if photo:
+        photo_url = save_image_or_error(photo, upload_dir, max_mb * 1024 * 1024)
+        # Returns relative path like "uploads/<filename>"
+
+    # Update pet fields
+    for key, value in payload.model_dump().items():
+        setattr(pet, key, value)
+    pet.photo_url = photo_url
+
+    # Save changes
+    db.commit()
+    db.refresh(pet)
+    return pet
 
 
 @router.patch("/{pet_id}/approve", response_model=PetOut, dependencies=[Depends(require_auth)])

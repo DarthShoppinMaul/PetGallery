@@ -1,9 +1,11 @@
 // PetList.jsx
 // Pet list page with favorite heart icons and filters
+// Fetches data from backend API
 
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAuth} from '../../context/AuthContext';
+import {useAuth} from '../../context/AuthContext.jsx';
+import {petsAPI, locationsAPI} from '../../services/api.js';
 
 export default function PetList() {
     const {user} = useAuth();
@@ -14,101 +16,51 @@ export default function PetList() {
     const [locations, setLocations] = useState([]);
     const [favorites, setFavorites] = useState(new Set());
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [filters, setFilters] = useState({
         species: '',
         location: '',
-        status: 'available',
+        status: '',
         search: ''
     });
 
-    // Sample data
+    // Load data from API on mount
     useEffect(() => {
-        // Simulate API call
-        setTimeout(() => {
-            setPets([
-                {
-                    pet_id: 1,
-                    name: 'Max',
-                    species: 'Dog',
-                    breed: 'Golden Retriever',
-                    age: 3,
-                    description: 'Friendly and energetic dog looking for an active family.',
-                    photo_url: null,
-                    adoption_status: 'available',
-                    location_id: 1
-                },
-                {
-                    pet_id: 2,
-                    name: 'Luna',
-                    species: 'Cat',
-                    breed: 'Siamese',
-                    age: 2,
-                    description: 'Sweet and playful cat who loves cuddles.',
-                    photo_url: null,
-                    adoption_status: 'available',
-                    location_id: 2
-                },
-                {
-                    pet_id: 3,
-                    name: 'Charlie',
-                    species: 'Dog',
-                    breed: 'Beagle',
-                    age: 5,
-                    description: 'Calm and gentle dog, great with kids.',
-                    photo_url: null,
-                    adoption_status: 'pending',
-                    location_id: 1
-                },
-                {
-                    pet_id: 4,
-                    name: 'Bella',
-                    species: 'Cat',
-                    breed: 'Persian',
-                    age: 4,
-                    description: 'Elegant cat who enjoys quiet environments.',
-                    photo_url: null,
-                    adoption_status: 'available',
-                    location_id: 2
-                },
-                {
-                    pet_id: 5,
-                    name: 'Rocky',
-                    species: 'Dog',
-                    breed: 'German Shepherd',
-                    age: 6,
-                    description: 'Loyal and protective, needs experienced owner.',
-                    photo_url: null,
-                    adoption_status: 'available',
-                    location_id: 1
-                },
-                {
-                    pet_id: 6,
-                    name: 'Whiskers',
-                    species: 'Cat',
-                    breed: 'Tabby',
-                    age: 1,
-                    description: 'Young and curious kitten full of energy.',
-                    photo_url: null,
-                    adoption_status: 'adopted',
-                    location_id: 2
-                }
+        loadData();
+    }, []);
+
+    // Function: Load pets and locations from API
+    const loadData = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            // Fetch both pets and locations in parallel (faster than sequential)
+            const [petsData, locationsData] = await Promise.all([
+                petsAPI.list(),      // Get all pets
+                locationsAPI.list(), // Get all locations
             ]);
 
-            setLocations([
-                {location_id: 1, name: 'Downtown Animal Shelter', city: 'Saskatoon'},
-                {location_id: 2, name: 'Riverside Pet Adoption Center', city: 'Regina'}
-            ]);
+            setPets(petsData);
+            setLocations(locationsData);
 
-            // Simulate some favorites for logged-in users
+
+            // For now, using localStorage to persist favorites
             if (user) {
-                setFavorites(new Set([1, 3]));
+                const savedFavorites = localStorage.getItem(`favorites_${user.user_id}`);
+                if (savedFavorites) {
+                    setFavorites(new Set(JSON.parse(savedFavorites)));
+                }
             }
-
+        } catch (err) {
+            console.error('Error loading data:', err);
+            setError('Failed to load pets. Please make sure the API server is running.');
+        } finally {
             setLoading(false);
-        }, 500);
-    }, [user]);
+        }
+    };
 
-    // Get location name
+    // Get location name from location ID
     const getLocationName = (locationId) => {
         const location = locations.find(l => l.location_id === locationId);
         return location ? location.name : 'Unknown';
@@ -130,38 +82,66 @@ export default function PetList() {
         }
         setFavorites(newFavorites);
 
-        // In real app, would call API here
-        console.log('Toggled favorite for pet', petId);
+        // Save favorites to localStorage (in real app, would save to backend)
+        localStorage.setItem(`favorites_${user.user_id}`, JSON.stringify([...newFavorites]));
     };
 
     // Get status badge color
     const getStatusBadge = (status) => {
         const styles = {
-            available: 'bg-green-900/30 text-green-400 border-green-500',
+            approved: 'bg-green-900/30 text-green-400 border-green-500',
             pending: 'bg-yellow-900/30 text-yellow-400 border-yellow-500',
             adopted: 'bg-gray-600/30 text-gray-400 border-gray-500'
         };
 
+        const displayStatus = status.charAt(0).toUpperCase() + status.slice(1);
+
         return (
-            <span className={`inline-block px-3 py-1 text-xs rounded-full border ${styles[status]}`}>
-                {status.charAt(0).toUpperCase() + status.slice(1)}
+            <span className={`inline-block px-3 py-1 text-xs rounded-full border ${styles[status] || styles.pending}`}>
+                {displayStatus}
             </span>
         );
     };
 
-    // Filter pets
+    // Filter pets based on selected filters
     const filteredPets = pets.filter(pet => {
-        if (filters.species && pet.species !== filters.species) return false;
+        // Species filter
+        if (filters.species && pet.species.toLowerCase() !== filters.species.toLowerCase()) return false;
+
+        // Location filter
         if (filters.location && pet.location_id.toString() !== filters.location) return false;
-        if (filters.status && pet.adoption_status !== filters.status) return false;
+
+        // Status filter
+        if (filters.status && pet.status !== filters.status) return false;
+
+        // Search filter (searches in pet name)
         if (filters.search && !pet.name.toLowerCase().includes(filters.search.toLowerCase())) return false;
+
         return true;
     });
 
+    // Get unique species from pets for filter dropdown
+    const uniqueSpecies = [...new Set(pets.map(p => p.species))].sort();
+
+    // Loading state
     if (loading) {
         return (
             <div className="container-narrow">
                 <div className="text-center py-8">Loading pets...</div>
+            </div>
+        );
+    }
+
+    // Error state
+    if (error) {
+        return (
+            <div className="container-narrow">
+                <div className="text-center py-8">
+                    <div className="text-red-500 mb-4">{error}</div>
+                    <button onClick={loadData} className="btn">
+                        Try Again
+                    </button>
+                </div>
             </div>
         );
     }
@@ -171,8 +151,8 @@ export default function PetList() {
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-3xl">Adoptable Pets</h1>
                 {user?.is_admin && (
-                    <button onClick={() => navigate('/add-pet')} className="btn">
-                        Add New Pet
+                    <button onClick={() => navigate('/admin/manage-pets')} className="btn">
+                        Manage Pets
                     </button>
                 )}
             </div>
@@ -196,8 +176,11 @@ export default function PetList() {
                         onChange={(e) => setFilters({...filters, species: e.target.value})}
                     >
                         <option value="">All Species</option>
-                        <option value="Dog">Dogs</option>
-                        <option value="Cat">Cats</option>
+                        {uniqueSpecies.map(species => (
+                            <option key={species} value={species}>
+                                {species}
+                            </option>
+                        ))}
                     </select>
 
                     {/* Location filter */}
@@ -221,9 +204,8 @@ export default function PetList() {
                         onChange={(e) => setFilters({...filters, status: e.target.value})}
                     >
                         <option value="">All Statuses</option>
-                        <option value="available">Available</option>
+                        <option value="approved">Approved</option>
                         <option value="pending">Pending</option>
-                        <option value="adopted">Adopted</option>
                     </select>
                 </div>
             </div>
@@ -231,7 +213,9 @@ export default function PetList() {
             {/* Pet Grid */}
             {filteredPets.length === 0 ? (
                 <div className="text-center py-8 text-[#B6C6DA]">
-                    No pets found matching your filters.
+                    {pets.length === 0
+                        ? 'No pets available yet. Check back soon!'
+                        : 'No pets found matching your filters.'}
                 </div>
             ) : (
                 <div className="grid-pets">
@@ -263,7 +247,7 @@ export default function PetList() {
                                 className="card-img"
                                 style={{
                                     backgroundImage: pet.photo_url
-                                        ? `url(http://localhost:8000/${pet.photo_url})`
+                                        ? `url(${API_BASE_URL}/${pet.photo_url})`
                                         : undefined
                                 }}
                             />
@@ -272,11 +256,11 @@ export default function PetList() {
                             <div className="card-body">
                                 <div className="flex items-start justify-between gap-2 mb-2">
                                     <div className="font-semibold text-lg">{pet.name}</div>
-                                    {getStatusBadge(pet.adoption_status)}
+                                    {getStatusBadge(pet.status)}
                                 </div>
 
                                 <div className="meta mb-2">
-                                    {pet.species} • {pet.breed} • {pet.age} {pet.age === 1 ? 'yr' : 'yrs'}
+                                    {pet.species} • {pet.age} {pet.age === 1 ? 'yr' : 'yrs'}
                                 </div>
 
                                 <div className="pill mb-2" title={getLocationName(pet.location_id)}>
@@ -284,32 +268,12 @@ export default function PetList() {
                                 </div>
 
                                 <div className="desc mb-3">
-                                    {pet.description}
+                                    {pet.description || 'No description available'}
                                 </div>
 
                                 <div className="card-actions">
-                                    {user?.is_admin && (
-                                        <>
-                                            <button
-                                                className="btn-secondary text-sm px-3 py-1.5"
-                                                onClick={() => navigate(`/edit-pet/${pet.pet_id}`)}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="btn-danger text-sm px-3 py-1.5 ml-2"
-                                                onClick={() => {
-                                                    if (confirm(`Delete ${pet.name}?`)) {
-                                                        console.log('Delete pet', pet.pet_id);
-                                                    }
-                                                }}
-                                            >
-                                                Delete
-                                            </button>
-                                        </>
-                                    )}
                                     <button
-                                        className="btn text-sm px-3 py-1.5 ml-auto"
+                                        className="btn text-sm px-3 py-1.5"
                                         onClick={() => navigate(`/pet/${pet.pet_id}`)}
                                     >
                                         View Details
@@ -323,3 +287,6 @@ export default function PetList() {
         </div>
     );
 }
+
+// Import API_BASE_URL from api.js
+const API_BASE_URL = 'http://localhost:8000';

@@ -4,8 +4,12 @@
 // All functions return promises that resolve to data or throw errors
 
 // Base URL for all API calls
-// Change this if your backend runs on a different port
-const API_BASE_URL = 'http://localhost:8000';
+// Uses environment variable if available, otherwise defaults to localhost
+// In production, set VITE_API_BASE_URL in .env file
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+
+// Export for use in components (e.g., for image URLs)
+export { API_BASE_URL };
 
 // Helper function: Handle fetch API responses
 // Converts response to JSON or throws an error if request failed
@@ -172,6 +176,28 @@ export const locationsAPI = {
         });
         return handleResponse(response);
     },
+
+    // Function: Update an existing location
+    update: async (id, data) => {
+        const response = await fetch(`${API_BASE_URL}/locations/${id}`, {
+            method: 'PUT',                           // HTTP PUT request
+            headers: {
+                'Content-Type': 'application/json',  // Sending JSON
+            },
+            credentials: 'include',                  // Send session cookie
+            body: JSON.stringify(data),              // Convert data to JSON
+        });
+        return handleResponse(response);
+    },
+
+    // Function: Delete a location
+    delete: async (id) => {
+        const response = await fetch(`${API_BASE_URL}/locations/${id}`, {
+            method: 'DELETE',          // HTTP DELETE request
+            credentials: 'include',    // Send session cookie
+        });
+        return handleResponse(response);
+    },
 };
 
 // ============================================================================
@@ -207,6 +233,20 @@ export const petsAPI = {
             body: formData,                // Send FormData directly
             // DON'T set Content-Type header - browser sets it automatically
             // with the correct multipart boundary
+        });
+        return handleResponse(response);
+    },
+
+    // Function: Update an existing pet (with optional photo upload)
+    update: async (id, formData) => {
+        // formData should be a FormData object with:
+        // - name, species, age, location_id, description
+        // - photo (optional file)
+        const response = await fetch(`${API_BASE_URL}/pets/${id}`, {
+            method: 'PUT',                 // HTTP PUT request
+            credentials: 'include',        // Send session cookie
+            body: formData,                // Send FormData directly
+            // DON'T set Content-Type header - browser sets it automatically
         });
         return handleResponse(response);
     },

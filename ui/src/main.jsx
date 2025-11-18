@@ -15,8 +15,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 // Import all page components
 import App from './react/App';                    // Layout wrapper with navbar
 import Home from './react/pages/Home';            // Public home page
-import AddPet from './react/pages/AddPet';        // Add pet form (protected)
-import AddLocation from './react/pages/AddLocation'; // Add location form (protected)
+import AddPet from './react/pages/ManagePet.jsx';        // Add pet form (protected)
+import AddLocation from './react/pages/ManageLocation.jsx'; // Add location form (protected)
 
 // NEW IMPORTS FOR PROJECT 2
 import LoginEnhanced from './react/pages/Login';  // Enhanced login with Google + Remember Me

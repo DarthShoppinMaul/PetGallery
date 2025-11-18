@@ -4,7 +4,7 @@ import os
 
 # Load environment variables from a .env file into os.environ
 # IMPORTANT: Never commit .env files to version control (they can contain secrets).
-load_dotenv()
+load_dotenv('googleauth.env')
 
 # -----------------------------
 # GLOBAL CONFIG VARIABLES
