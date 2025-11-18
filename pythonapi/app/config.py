@@ -21,7 +21,7 @@ MY_SECRET_KEY = os.getenv(
 #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Database connection string
-# Default â†’ SQLite file "ems.db" inside app/ folder
+# Default at SQLite file "ems.db" inside app/ folder
 # Can be overridden in .env (e.g., PostgreSQL, MySQL)
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ems.db")
 
