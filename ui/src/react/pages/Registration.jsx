@@ -119,7 +119,8 @@ export default function Registration() {
 
     // Handle Google Sign-Up
     const handleGoogleSignUp = () => {
-        alert('Google Sign-Up would be triggered here. This redirects to Google OAuth.');
+        // Redirect to backend Google OAuth endpoint
+        window.location.href = 'http://localhost:8000/auth/google/login';
     };
 
     // Password strength indicator component
@@ -226,7 +227,7 @@ export default function Registration() {
                             value={formData.password}
                             onChange={handleChange}
                             disabled={isSubmitting}
-                            placeholder="••••••••"
+                            placeholder="******"
                         />
                         {errors.password && (
                             <div className="text-red-400 text-sm mt-1">{errors.password}</div>
@@ -244,7 +245,7 @@ export default function Registration() {
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             disabled={isSubmitting}
-                            placeholder="••••••••"
+                            placeholder="*****"
                         />
                         {errors.confirmPassword && (
                             <div className="text-red-400 text-sm mt-1">{errors.confirmPassword}</div>

@@ -126,7 +126,7 @@ export default function Login() {
                                 }
                             }}
                             disabled={isSubmitting}
-                            placeholder="••••••••"
+                            placeholder="*****"
                             data-cy="password-input"
                         />
                         {errors.password && (

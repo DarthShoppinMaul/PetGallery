@@ -221,7 +221,7 @@ export default function AdminDashboard() {
                 <h2 className="text-2xl font-semibold mb-4">Quick Actions</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <button
-                        onClick={() => navigate('/add-pet')}
+                        onClick={() => navigate('/manage-pet')}
                         className="panel hover:border-[#64FFDA] transition-colors text-center py-8"
                     >
                         <svg className="w-12 h-12 mx-auto mb-3 text-[#64FFDA]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

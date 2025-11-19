@@ -121,6 +121,14 @@ const router = createBrowserRouter([
                     </ProtectedRoute>
                 ),
             },
+            {
+                path: 'admin/manage-pets', // Route: /admin/manage-pets
+                element: (
+                    <ProtectedRoute>
+                        <AddPet/>
+                    </ProtectedRoute>
+                ),
+            },
         ],
     },
 ]);
