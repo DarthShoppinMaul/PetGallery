@@ -1,4 +1,4 @@
-// Cypress Commands -
+// Cypress Commands
 
 // Helper function to get API base URL
 function getApiBaseUrl() {

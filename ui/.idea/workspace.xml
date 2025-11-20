@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b00ffbd-7a02-4a67-b8ea-3de55b5fc5ba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../pythonapi/app/api/auth_endpoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pythonapi/app/api/auth_endpoints.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cypress.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/e2e/auth.cy.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/e2e/auth.cy.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cypress/support/commands.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/support/commands.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/react/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/react/pages/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cypress/support/e2e.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/support/e2e.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +90,7 @@
       <workItem from="1763474527530" duration="1810000" />
       <workItem from="1763481694189" duration="3607000" />
       <workItem from="1763590487356" duration="1380000" />
-      <workItem from="1763591902370" duration="5675000" />
+      <workItem from="1763591902370" duration="6988000" />
     </task>
     <servers />
   </component>

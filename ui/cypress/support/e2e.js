@@ -1,5 +1,6 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
+import './cypress-auth-commands'  // Import enhanced auth commands
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

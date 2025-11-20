@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://127.0.0.1:5173',
+    baseUrl: 'http://localhost:5173',  // Changed from 127.0.0.1 to localhost
     viewportWidth: 1280,
     viewportHeight: 720,
     defaultCommandTimeout: 10000,
@@ -10,6 +10,7 @@ export default defineConfig({
     responseTimeout: 10000,
     video: false,
     screenshotOnRunFailure: false,
+    chromeWebSecurity: false,  //  to handle CORS issues
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
