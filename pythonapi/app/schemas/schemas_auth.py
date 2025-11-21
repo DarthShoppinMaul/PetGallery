@@ -19,9 +19,11 @@ class LoginRequest(BaseModel):
     Fields:
         - email: User's email address
         - password: User's password (plain text, will be hashed server-side)
+        - remember_me: Optional flag for 7-day token (default: False)
     """
     email: EmailStr
     password: str = Field(..., min_length=6)
+    remember_me: bool = False
 
 
 class RegisterRequest(BaseModel):
@@ -60,7 +62,7 @@ class UserOut(BaseModel):
     created_at: datetime
 
     class Config:
-        from_attributes = True  # Allows creation from SQLAlchemy models
+        from_attributes = True
 
 
 class UserUpdate(BaseModel):

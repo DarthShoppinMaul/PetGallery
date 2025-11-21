@@ -1,4 +1,7 @@
 # app/config.py
+# Configuration settings for the application
+# Loads environment variables from googleauth.env
+
 from dotenv import load_dotenv
 import os
 from pathlib import Path
@@ -11,31 +14,59 @@ env_file = config_dir / 'googleauth.env'
 if not env_file.exists():
     env_file = config_dir.parent / 'googleauth.env'
 
-# Load environment variables from a .env file into os.environ
-# IMPORTANT: Never commit .env files to version control (they can contain secrets).
+# Load environment variables
 load_dotenv(env_file)
 
 # -----------------------------
 # GLOBAL CONFIG VARIABLES
 # -----------------------------
 
-# Example secret key (used for signing tokens, sessions, etc.)
-# In production, always override this with a secure key via .env
+# Secret key for JWT signing (MUST be changed in production!)
 MY_SECRET_KEY = os.getenv(
     "MY_SECRET_KEY",
-    "default goes here - not secure but fine while developing"
+    "default-secret-key-change-in-production"
 )
 
-# Base directory of the project (absolute path to the 'app' folder)
-#BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Validate secret key in production
+if MY_SECRET_KEY == "default-secret-key-change-in-production" or MY_SECRET_KEY == "your-secret-key-here":
+    print("WARNING: Using default secret key. Please change MY_SECRET_KEY in googleauth.env")
 
 # Database connection string
-# Default at SQLite file "ems.db" inside app/ folder
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ems.db")
 
+# -----------------------------
+# GOOGLE OAUTH CONFIGURATION
+# -----------------------------
 
-# Google OAuth Configuration
-# These should be set in your .env file
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
-GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI", "http://localhost:5173/auth/google/callback")
+
+# Backend callback URL (where Google redirects after authorization)
+# This should ALWAYS point to the backend, not the frontend
+GOOGLE_REDIRECT_URI = os.getenv(
+    "GOOGLE_REDIRECT_URI",
+    "http://localhost:8000/auth/google/callback"
+)
+
+# Validate Google OAuth configuration
+if GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET:
+    print(f"✓ Google OAuth configured")
+    print(f"  Client ID: {GOOGLE_CLIENT_ID[:20]}...")
+    print(f"  Redirect URI: {GOOGLE_REDIRECT_URI}")
+else:
+    print("⚠ Google OAuth not configured (set credentials in googleauth.env)")
+
+# Frontend URL (where backend redirects after successful OAuth)
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
+# -----------------------------
+# SECURITY SETTINGS
+# -----------------------------
+
+# CORS origins (comma-separated if multiple)
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173")
+
+# JWT Settings
+JWT_ALGORITHM = "HS256"
+JWT_EXPIRATION_HOURS = 1  # Default token expiration
+JWT_REMEMBER_ME_DAYS = 7  # Remember me token expiration

@@ -1,12 +1,12 @@
 // Login.jsx
-
+// Login page with JWT authentication and remember me feature
 
 import React, {useState, useEffect} from 'react';
 import {useNavigate, Link, useSearchParams} from 'react-router-dom';
 import {useAuth} from '../../context/AuthContext';
 
 export default function Login() {
-    const {login, user, isAuthenticated} = useAuth(); // Get isAuthenticated flag
+    const {login, user, isAuthenticated} = useAuth();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
@@ -17,7 +17,7 @@ export default function Login() {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Redirect if already authenticated (handles timing issues)
+    // Redirect if already authenticated
     useEffect(() => {
         if (isAuthenticated && !isSubmitting) {
             navigate('/pets');
@@ -52,7 +52,7 @@ export default function Login() {
         return Object.keys(newErrors).length === 0;
     };
 
-    // Handle regular login - FIXED for timing
+    // Handle regular login with JWT
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
@@ -64,15 +64,15 @@ export default function Login() {
         setIsSubmitting(true);
 
         try {
-            const result = await login(email, password);
+            // Pass rememberMe to login function
+            const result = await login(email, password, rememberMe);
 
             if (result.success) {
-                console.log('Login successful, waiting for context update...');
+                console.log('Login successful with JWT');
 
                 // Small delay to ensure context updates
                 setTimeout(() => {
                     if (!isAuthenticated) {
-                        //If context didn't update, navigate manually
                         console.log('Fallback redirect to /pets');
                         navigate('/pets');
                     }
@@ -147,7 +147,7 @@ export default function Login() {
                                 }
                             }}
                             disabled={isSubmitting}
-                            placeholder="*****"
+                            placeholder="******"
                             data-cy="password-input"
                             required
                         />
@@ -158,7 +158,7 @@ export default function Login() {
                         )}
                     </div>
 
-                    {/* Remember Me */}
+                    {/* Remember Me checkbox */}
                     <div className="flex items-center justify-between mb-6">
                         <label className="flex items-center cursor-pointer">
                             <input
@@ -169,7 +169,7 @@ export default function Login() {
                                 disabled={isSubmitting}
                                 data-cy="remember-me-checkbox"
                             />
-                            <span className="ml-2 text-sm">Remember me</span>
+                            <span className="ml-2 text-sm">Remember me for 7 days</span>
                         </label>
                     </div>
 

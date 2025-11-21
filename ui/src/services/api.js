@@ -1,6 +1,6 @@
 // api.js
 // This file contains all functions for communicating with the backend API
-// Uses native fetch API
+// Uses native fetch API with JWT authentication
 // All functions return promises that resolve to data or throw errors
 
 // Base URL for all API calls
@@ -22,12 +22,12 @@ const handleResponse = async (response) => {
 // AUTHENTICATION API
 
 export const authAPI = {
-    login: async (email, password) => {
+    login: async (email, password, rememberMe = false) => {
         const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, remember_me: rememberMe }),
         });
         return handleResponse(response);
     },
@@ -209,7 +209,6 @@ export const petsAPI = {
 // APPLICATIONS API
 
 export const applicationsAPI = {
-    // Submit a new application
     create: async (data) => {
         const response = await fetch(`${API_BASE_URL}/applications`, {
             method: 'POST',
@@ -220,7 +219,6 @@ export const applicationsAPI = {
         return handleResponse(response);
     },
 
-    // Get all applications (admin sees all, user sees their own)
     list: async (status = null) => {
         const url = status
             ? `${API_BASE_URL}/applications?status=${status}`
@@ -231,7 +229,6 @@ export const applicationsAPI = {
         return handleResponse(response);
     },
 
-    // Get specific application
     get: async (id) => {
         const response = await fetch(`${API_BASE_URL}/applications/${id}`, {
             credentials: 'include',
@@ -239,7 +236,6 @@ export const applicationsAPI = {
         return handleResponse(response);
     },
 
-    // Update application (admin only)
     update: async (id, data) => {
         const response = await fetch(`${API_BASE_URL}/applications/${id}`, {
             method: 'PATCH',
@@ -250,7 +246,6 @@ export const applicationsAPI = {
         return handleResponse(response);
     },
 
-    // Get stats (admin only)
     getStats: async () => {
         const response = await fetch(`${API_BASE_URL}/applications/stats`, {
             credentials: 'include',
@@ -263,7 +258,6 @@ export const applicationsAPI = {
 // FAVORITES API
 
 export const favoritesAPI = {
-    // Get user's favorited pets
     list: async () => {
         const response = await fetch(`${API_BASE_URL}/favorites`, {
             credentials: 'include',
@@ -271,7 +265,6 @@ export const favoritesAPI = {
         return handleResponse(response);
     },
 
-    // Get list of favorited pet IDs
     listIds: async () => {
         const response = await fetch(`${API_BASE_URL}/favorites/list-ids`, {
             credentials: 'include',
@@ -279,7 +272,6 @@ export const favoritesAPI = {
         return handleResponse(response);
     },
 
-    // Add pet to favorites
     add: async (petId) => {
         const response = await fetch(`${API_BASE_URL}/favorites/${petId}`, {
             method: 'POST',
@@ -288,7 +280,6 @@ export const favoritesAPI = {
         return handleResponse(response);
     },
 
-    // Remove pet from favorites
     remove: async (petId) => {
         const response = await fetch(`${API_BASE_URL}/favorites/${petId}`, {
             method: 'DELETE',
@@ -297,7 +288,6 @@ export const favoritesAPI = {
         return handleResponse(response);
     },
 
-    // Check if pet is favorited
     check: async (petId) => {
         const response = await fetch(`${API_BASE_URL}/favorites/check/${petId}`, {
             credentials: 'include',

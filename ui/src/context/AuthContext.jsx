@@ -1,12 +1,11 @@
 // AuthContext.jsx
-// This file manages global authentication state for the entire app
-// It provides login, logout, registration, and current user information to all components
+// This file manages global authentication state with JWT support
+// Provides login, logout, registration, and current user information to all components
 
 import React, {createContext, useContext, useState, useEffect} from 'react';
 import {authAPI} from '../services/api.js';
 
 // Create a Context to share auth state across the app
-// null is the default value (no auth data)
 const AuthContext = createContext(null);
 
 // AuthProvider wraps the entire app and provides auth functionality
@@ -18,12 +17,11 @@ export function AuthProvider({children}) {
     const [loading, setLoading] = useState(true);
 
     // On component mount (app startup), check if user is already logged in
-    // This runs once when the app first loads
     useEffect(() => {
         checkAuth();
-    }, []); // Empty dependency array = run once on mount
+    }, []);
 
-    // Function: Check if user is authenticated (has valid session cookie)
+    // Function: Check if user is authenticated (has valid JWT in cookie)
     const checkAuth = async () => {
         try {
             // Call backend API to get current user info
@@ -39,13 +37,13 @@ export function AuthProvider({children}) {
         }
     };
 
-    // Function: Log in a user
-    // Parameters: email (string), password (string)
+    // Function: Log in a user with JWT token
+    // Parameters: email (string), password (string), rememberMe (boolean)
     // Returns: {success: boolean, error?: string}
-    const login = async (email, password) => {
+    const login = async (email, password, rememberMe = false) => {
         try {
-            // Call backend login endpoint
-            const userData = await authAPI.login(email, password);
+            // Call backend login endpoint with rememberMe flag
+            const userData = await authAPI.login(email, password, rememberMe);
             // If successful, save user data
             setUser(userData);
             // Return success
@@ -65,7 +63,6 @@ export function AuthProvider({children}) {
     const register = async (formData) => {
         try {
             // Call backend registration endpoint
-            // The backend will create the user and auto-login
             const userData = await authAPI.register(
                 formData.email,
                 formData.password,
@@ -84,10 +81,10 @@ export function AuthProvider({children}) {
         }
     };
 
-    // Function: Log out the current user
+    // Function: Log out the current user (clears JWT cookie)
     const logout = async () => {
         try {
-            // Call backend logout endpoint (clears session cookie)
+            // Call backend logout endpoint (clears JWT cookie)
             await authAPI.logout();
             // Clear user data from state
             setUser(null);
@@ -104,13 +101,12 @@ export function AuthProvider({children}) {
         user,                          // User object or null
         isAuthenticated: !!user,       // Boolean: true if user exists
         loading,                       // Boolean: true while checking auth
-        login,                         // Function to log in
+        login,                         // Function to log in with remember me
         register,                      // Function to register new user
         logout,                        // Function to log out
     };
 
     // While checking authentication status, show loading screen
-    // This prevents the app from rendering before we know if user is logged in
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -120,13 +116,11 @@ export function AuthProvider({children}) {
     }
 
     // Provide the auth value to all child components
-    // Any component can now access auth state via useAuth()
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 // Custom hook: useAuth()
 // Use this in any component to access authentication state/functions
-// Example: const { user, login, logout, register } = useAuth();
 export const useAuth = () => {
     const context = useContext(AuthContext);
 
