@@ -1,6 +1,6 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
-import './authcommands.js'  // Import enhanced auth commands
+
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -10,6 +10,7 @@ beforeEach(() => {
     // Clear cookies and localStorage before each test
     cy.clearCookies()
     cy.clearLocalStorage()
+    cy.waitForAPI()
 })
 
 // Global error handling
