@@ -5,7 +5,80 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b00ffbd-7a02-4a67-b8ea-3de55b5fc5ba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/ApplicationForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ApplicationReviewActions.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ApplicationReviewDetails.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ApplicationsList.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/CallToAction.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/CreateUserForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/DashboardStats.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/DeleteAccountSection.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Divider.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ErrorMessage.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FavoriteButton.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FeaturedPets.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FilterTabs.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/FormInput.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/GoogleSignInButton.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/HeroSection.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/HowItWorks.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ImageFileInput.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/LoadingSpinner.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/LocationForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/LocationTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/LoginForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PasswordStrengthIndicator.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PendingApplicationsTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PetCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PetFilters.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PetForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PetGrid.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PetLocationInfo.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/PetTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ProfileEditForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ProfileInfo.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ProtectedRoute.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/QuickActions.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/RegistrationForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/StatsSection.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/StatusBadge.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/UserTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/applicationHooks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/locationHooks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/petHooks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/userHooks.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/AdminDashboard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/AdoptionApplicationForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/ApplicationReview.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Home.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Login.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/ManageLocation.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/ManagePet.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/MyApplications.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/PetDetails.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/PetList.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Registration.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/UserManagement.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/UserProfile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Protectedroute.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/AdminDashboard.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/AdoptionApplicationForm.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/ApplicationReview.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/Home.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/Login.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/ManageLocation.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/ManagePet.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/MyApplications.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/PetDetails.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/PetList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/Registration.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/UserManagement.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/react/pages/UserProfile.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,38 +103,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Cypress.all tests in adminreview.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;Cypress.all tests in application.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;Cypress.all tests in auth.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;Cypress.all tests in locations.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;Cypress.all tests in login.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;Cypress.all tests in navigation.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;Cypress.all tests in petbrowsing.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;Cypress.all tests in pets.cy.js.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.verifyservers.cjs.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.verifyservers.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/over_/Downloads/claude-code-jetbrains-plugin-0.1.12-beta.zip&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cypress.all tests in adminreview.cy.js.executor": "Run",
+    "Cypress.all tests in application.cy.js.executor": "Run",
+    "Cypress.all tests in auth.cy.js.executor": "Run",
+    "Cypress.all tests in locations.cy.js.executor": "Run",
+    "Cypress.all tests in login.cy.js.executor": "Run",
+    "Cypress.all tests in navigation.cy.js.executor": "Run",
+    "Cypress.all tests in petbrowsing.cy.js.executor": "Run",
+    "Cypress.all tests in pets.cy.js.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.verifyservers.cjs.executor": "Run",
+    "Node.js.verifyservers.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/over_/CWEB/CWEB280Project/ui/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src" />
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src\components" />
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src\services" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\cypress\e2e" />
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src\components" />
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src\hooks" />
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src" />
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src\react" />
+      <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src\react\pages" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">

@@ -1,131 +1,123 @@
 // main.jsx
 // Entry point for the React application
-// Sets up routing and wraps app with authentication provider
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import './index.css';  // Import global styles (Tailwind CSS)
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './index.css';
 
-// Import authentication context provider
-import {AuthProvider} from './context/AuthContext';
-// Import route protection component
-import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
-// Import all page components
-import App from './react/App';                    // Layout wrapper with navbar
-import Home from './react/pages/Home';            // Public home page
-import AddPet from './react/pages/ManagePet.jsx';        // Add pet form (protected)
-import AddLocation from './react/pages/ManageLocation.jsx'; // Add location form (protected)
+import App from './App.jsx';
+import Home from './pages/Home.jsx';
+import Login from './pages/Login.jsx';
+import Registration from './pages/Registration.jsx';
+import PetList from './pages/PetList.jsx';
+import PetDetails from './pages/PetDetails.jsx';
+import AdoptionApplicationForm from './pages/AdoptionApplicationForm.jsx';
+import MyApplications from './pages/MyApplications.jsx';
+import ApplicationReview from './pages/ApplicationReview.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
+import UserManagement from './pages/UserManagement.jsx';
+import UserProfile from './pages/UserProfile.jsx';
+import ManagePet from './pages/ManagePet.jsx';
+import ManageLocation from './pages/ManageLocation.jsx';
 
-// NEW IMPORTS FOR PROJECT 2
-import LoginEnhanced from './react/pages/Login';  // Enhanced login with Google + Remember Me
-import Registration from './react/pages/Registration';     // User registration page
-import PetListEnhanced from './react/pages/PetList'; // Pet list with favorites
-import PetDetails from './react/pages/PetDetails';         // Pet details with Apply button
-import AdoptionApplicationForm from './react/pages/AdoptionApplicationForm'; // Application form
-import MyApplications from './react/pages/MyApplications'; // User's applications
-import ApplicationReview from './react/pages/ApplicationReview'; // Admin review
-import AdminDashboardEnhanced from './react/pages/AdminDashboard'; // Enhanced dashboard
-import UserManagement from './react/pages/UserManagement'; // Admin: Manage all users
-import UserProfile from './react/pages/UserProfile';       // User: Manage own profile
-
-// Create the router configuration
-// Defines all routes (URLs) and which components render for each
 const router = createBrowserRouter([
     {
-        path: '/',                    // Root path
-        element: <App/>,              // App component wraps all pages (navbar, etc.)
-        children: [                   // Nested routes that render inside App's <Outlet/>
+        path: '/',
+        element: <App />,
+        children: [
             {
-                index: true,          // This is the default route at '/'
-                element: <Home/>,     // Home page (public - shows approved pets)
+                index: true,
+                element: <Home />,
             },
             {
-                path: 'login',        // Route: /login
-                element: <LoginEnhanced/>,
+                path: 'login',
+                element: <Login />,
             },
             {
-                path: 'register',     // Route: /register
-                element: <Registration/>,
+                path: 'register',
+                element: <Registration />,
             },
             {
-                path: 'pets',         // Route: /pets
-                element: <PetListEnhanced/>,
+                path: 'pets',
+                element: <PetList />,
             },
             {
-                path: 'pet/:id',      // Route: /pet/1, /pet/2, etc.
-                element: <PetDetails/>,
+                path: 'pet/:id',
+                element: <PetDetails />,
             },
             {
-                path: 'apply/:petId', // Route: /apply/1, /apply/2, etc.
+                path: 'apply/:petId',
                 element: (
                     <ProtectedRoute>
-                        <AdoptionApplicationForm/>
+                        <AdoptionApplicationForm />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'my-applications', // Route: /my-applications
+                path: 'my-applications',
                 element: (
                     <ProtectedRoute>
-                        <MyApplications/>
+                        <MyApplications />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'profile',      // Route: /profile
+                path: 'profile',
                 element: (
                     <ProtectedRoute>
-                        <UserProfile/>
+                        <UserProfile />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'admin/dashboard', // Route: /admin/dashboard
+                path: 'admin/dashboard',
                 element: (
                     <ProtectedRoute>
-                        <AdminDashboardEnhanced/>
+                        <AdminDashboard />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'admin/application/:id', // Route: /admin/application/1
+                path: 'admin/application/:id',
                 element: (
                     <ProtectedRoute>
-                        <ApplicationReview/>
+                        <ApplicationReview />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'admin/users',  // Route: /admin/users
+                path: 'admin/users',
                 element: (
                     <ProtectedRoute>
-                        <UserManagement/>
+                        <UserManagement />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'add-pet',      // Route: /add-pet
+                path: 'add-pet',
                 element: (
                     <ProtectedRoute>
-                        <AddPet/>
+                        <ManagePet />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'add-location', // Route: /add-location
+                path: 'add-location',
                 element: (
                     <ProtectedRoute>
-                        <AddLocation/>
+                        <ManageLocation />
                     </ProtectedRoute>
                 ),
             },
             {
-                path: 'admin/manage-pets', // Route: /admin/manage-pets
+                path: 'admin/manage-pets',
                 element: (
                     <ProtectedRoute>
-                        <AddPet/>
+                        <ManagePet />
                     </ProtectedRoute>
                 ),
             },
@@ -133,16 +125,10 @@ const router = createBrowserRouter([
     },
 ]);
 
-// Render the React app
-// 1. Get the 'root' div from index.html
-// 2. Create a React root
-// 3. Render the app inside StrictMode (helps catch bugs during development)
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        {/* AuthProvider wraps everything - provides auth state to all components */}
         <AuthProvider>
-            {/* RouterProvider handles navigation and renders the right page */}
-            <RouterProvider router={router}/>
+            <RouterProvider router={router} />
         </AuthProvider>
     </React.StrictMode>
 );

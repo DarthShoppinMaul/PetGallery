@@ -1,15 +1,11 @@
 // api.js
-// This file contains all functions for communicating with the backend API
-// Uses native fetch API with JWT authentication
-// All functions return promises that resolve to data or throw errors
+// Centralized API service for all backend communication
 
-// Base URL for all API calls
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
-// Export for use in components (e.g., for image URLs)
 export { API_BASE_URL };
 
-// Helper function: Handle fetch API responses
+// Helper function to handle fetch responses
 const handleResponse = async (response) => {
     if (!response.ok) {
         const error = await response.json().catch(() => ({ detail: 'Request failed' }));
@@ -18,9 +14,7 @@ const handleResponse = async (response) => {
     return response.json();
 };
 
-
-// AUTHENTICATION API
-
+// Authentication API
 export const authAPI = {
     login: async (email, password, rememberMe = false) => {
         const response = await fetch(`${API_BASE_URL}/auth/login`, {
@@ -65,9 +59,7 @@ export const authAPI = {
     },
 };
 
-
-// USERS API
-
+// Users API
 export const usersAPI = {
     list: async () => {
         const response = await fetch(`${API_BASE_URL}/users`, {
@@ -112,9 +104,7 @@ export const usersAPI = {
     },
 };
 
-
-// LOCATIONS API
-
+// Locations API
 export const locationsAPI = {
     list: async () => {
         const response = await fetch(`${API_BASE_URL}/locations`, {
@@ -152,9 +142,7 @@ export const locationsAPI = {
     },
 };
 
-
-// PETS API
-
+// Pets API
 export const petsAPI = {
     list: async () => {
         const response = await fetch(`${API_BASE_URL}/pets`, {
@@ -205,9 +193,7 @@ export const petsAPI = {
     },
 };
 
-
-// APPLICATIONS API
-
+// Applications API
 export const applicationsAPI = {
     create: async (data) => {
         const response = await fetch(`${API_BASE_URL}/applications`, {
@@ -262,9 +248,7 @@ export const applicationsAPI = {
     },
 };
 
-
-// FAVORITES API
-
+// Favorites API
 export const favoritesAPI = {
     list: async () => {
         const response = await fetch(`${API_BASE_URL}/favorites`, {
