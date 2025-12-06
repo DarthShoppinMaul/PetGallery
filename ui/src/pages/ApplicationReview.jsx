@@ -5,8 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useApplication, useUpdateApplication } from '../hooks/applicationHooks.js';
-import ApplicationReviewDetails from '../components/ApplicationReviewDetails.jsx';
-import ApplicationReviewActions from '../components/ApplicationReviewActions.jsx';
+import { ApplicationReviewDetails, ApplicationReviewActions } from '../components/ApplicationReview.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 

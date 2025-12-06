@@ -1,17 +1,14 @@
 // AdminDashboard.jsx
 // Admin dashboard with stats and pending applications
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { usePets, useLocations } from '../hooks/petHooks.js';
 import { useUsers } from '../hooks/userHooks.js';
 import { useApplications, useApplicationStats } from '../hooks/applicationHooks.js';
-import DashboardStats from '../components/DashboardStats.jsx';
-import QuickActions from '../components/QuickActions.jsx';
-import PendingApplicationsTable from '../components/PendingApplicationsTable.jsx';
+import { DashboardStats, QuickActions, PendingApplicationsTable } from '../components/Dashboard.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
-import ErrorMessage from '../components/ErrorMessage.jsx';
 
 export default function AdminDashboard() {
     const { user } = useAuth();
@@ -20,7 +17,7 @@ export default function AdminDashboard() {
     const { pets, loading: petsLoading } = usePets();
     const { locations, loading: locationsLoading } = useLocations();
     const { users, loading: usersLoading } = useUsers();
-    const { applications, loading: appsLoading, refetch } = useApplications('pending');
+    const { applications, loading: appsLoading } = useApplications('pending');
     const { stats: appStats, loading: statsLoading } = useApplicationStats();
 
     useEffect(() => {

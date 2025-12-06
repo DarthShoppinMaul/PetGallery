@@ -4,11 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { usePets } from '../hooks/petHooks.js';
-import HeroSection from '../components/HeroSection.jsx';
-import StatsSection from '../components/StatsSection.jsx';
-import FeaturedPets from '../components/FeaturedPets.jsx';
-import HowItWorks from '../components/HowItWorks.jsx';
-import CallToAction from '../components/CallToAction.jsx';
+import { HeroSection, StatsSection, FeaturedPets, HowItWorks, CallToAction } from '../components/HomeComp.jsx';
 
 export default function Home() {
     const { user } = useAuth();

@@ -5,9 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useUpdateUser, useDeleteUser } from '../hooks/userHooks.js';
-import ProfileInfo from '../components/ProfileInfo.jsx';
-import ProfileEditForm from '../components/ProfileEditForm.jsx';
-import DeleteAccountSection from '../components/DeleteAccountSection.jsx';
+import { ProfileInfo, ProfileEditForm, DeleteAccountSection } from '../components/Profile.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
 export default function UserProfile() {

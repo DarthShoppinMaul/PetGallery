@@ -1,11 +1,12 @@
-// ApplicationReviewDetails.jsx
-// Displays application details for admin review
+// ApplicationReview.jsx
+// Consolidated components for Application Review page
 
 import React from 'react';
 import { API_BASE_URL } from '../services/api.js';
 import StatusBadge from './StatusBadge.jsx';
 
-export default function ApplicationReviewDetails({ application }) {
+// Displays application details for admin review
+export function ApplicationReviewDetails({ application }) {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
@@ -42,7 +43,7 @@ export default function ApplicationReviewDetails({ application }) {
                     />
                     <h2 className="text-xl font-semibold mb-2">{application.pet_name}</h2>
                     <div className="text-[#B6C6DA] text-sm mb-2">
-                        {application.pet_species} • {application.pet_age} years old
+                        {application.pet_species} - {application.pet_age} years old
                     </div>
                     <StatusBadge status={application.status} />
                 </div>
@@ -103,4 +104,61 @@ export default function ApplicationReviewDetails({ application }) {
             </div>
         </div>
     );
+}
+
+// Admin actions for reviewing applications
+export function ApplicationReviewActions({
+    adminNotes,
+    onNotesChange,
+    onApprove,
+    onReject,
+    isSubmitting,
+    isPending
+}) {
+    if (!isPending) {
+        return null;
+    }
+
+    return (
+        <div className="panel mt-6">
+            <h3 className="text-lg font-semibold mb-4">Review Decision</h3>
+
+            <div className="mb-4">
+                <label className="block mb-2 text-sm font-medium">
+                    Admin Notes (Required for rejection)
+                </label>
+                <textarea
+                    className="textarea w-full"
+                    value={adminNotes}
+                    onChange={(e) => onNotesChange(e.target.value)}
+                    rows="3"
+                    placeholder="Add notes about your decision..."
+                    disabled={isSubmitting}
+                    data-cy="admin-notes-input"
+                />
+            </div>
+
+            <div className="flex gap-4">
+                <button
+                    onClick={onApprove}
+                    className="btn flex-1"
+                    disabled={isSubmitting}
+                    data-cy="approve-button"
+                >
+                    {isSubmitting ? 'Processing...' : 'Approve Application'}
+                </button>
+                <button
+                    onClick={onReject}
+                    className="btn-danger flex-1"
+                    disabled={isSubmitting}
+                    data-cy="reject-button"
+                >
+                    {isSubmitting ? 'Processing...' : 'Reject Application'}
+                </button>
+            </div>
+        </div>
+    );
+}
+
+export default class PendingApplicationsTable {
 }

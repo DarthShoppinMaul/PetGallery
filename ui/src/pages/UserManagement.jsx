@@ -5,8 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useUsers, useCreateUser, useUpdateUser, useDeleteUser } from '../hooks/userHooks.js';
-import UserTable from '../components/UserTable.jsx';
-import CreateUserForm from '../components/CreateUserForm.jsx';
+import { UserTable, CreateUserForm } from '../components/User.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 
