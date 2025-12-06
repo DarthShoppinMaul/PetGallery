@@ -4,14 +4,15 @@
 import React from 'react';
 
 export default function ApplicationForm({
-    formData,
-    errors,
-    isSubmitting,
-    onChange,
-    onSubmit
-}) {
+                                            formData,
+                                            errors,
+                                            isSubmitting,
+                                            onChange,
+                                            onSubmit
+                                        }) {
     return (
         <form onSubmit={onSubmit}>
+            {/* Application message textarea */}
             <div className="mb-6">
                 <label className="block mb-2 text-sm font-medium">
                     Why do you want to adopt this pet? *
@@ -34,6 +35,7 @@ export default function ApplicationForm({
                 </div>
             </div>
 
+            {/* Contact phone input */}
             <div className="mb-6">
                 <label className="block mb-2 text-sm font-medium">Contact Phone *</label>
                 <input
@@ -51,6 +53,7 @@ export default function ApplicationForm({
                 )}
             </div>
 
+            {/* Living situation dropdown */}
             <div className="mb-6">
                 <label className="block mb-2 text-sm font-medium">Living Situation *</label>
                 <select
@@ -73,6 +76,7 @@ export default function ApplicationForm({
                 )}
             </div>
 
+            {/* Other pets checkbox */}
             <div className="mb-6">
                 <label className="flex items-center cursor-pointer">
                     <input
@@ -87,6 +91,7 @@ export default function ApplicationForm({
                 </label>
             </div>
 
+            {/* Other pets details textarea */}
             {formData.hasOtherPets && (
                 <div className="mb-6">
                     <label className="block mb-2 text-sm font-medium">
@@ -108,6 +113,7 @@ export default function ApplicationForm({
                 </div>
             )}
 
+            {/* Submit button */}
             <button
                 type="submit"
                 className="btn w-full text-lg py-3"

@@ -1,5 +1,6 @@
 // Login.jsx
-// Login page with JWT authentication and remember me feature
+// User authentication page with email/password login and Google OAuth support
+// Includes remember me functionality for extended session duration
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -13,18 +14,21 @@ export default function Login() {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
+    // Form state
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Redirect already authenticated users to pets page
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/pets');
         }
     }, [isAuthenticated, navigate]);
 
+    // Handle OAuth error messages from URL parameters
     useEffect(() => {
         const error = searchParams.get('error');
         if (error === 'oauth_failed') {
@@ -32,6 +36,7 @@ export default function Login() {
         }
     }, [searchParams]);
 
+    // Validate email format and password requirements
     const validateForm = () => {
         const newErrors = {};
 
@@ -51,6 +56,7 @@ export default function Login() {
         return Object.keys(newErrors).length === 0;
     };
 
+    // Submit login credentials to authentication API
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
@@ -77,6 +83,7 @@ export default function Login() {
         }
     };
 
+    // Clear field-specific errors when user starts typing
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         if (errors.email) {

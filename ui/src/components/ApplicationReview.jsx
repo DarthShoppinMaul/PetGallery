@@ -1,5 +1,5 @@
 // ApplicationReview.jsx
-// Consolidated components for Application Review page
+// Components for admin application review page
 
 import React from 'react';
 import { API_BASE_URL } from '../services/api.js';
@@ -7,6 +7,7 @@ import StatusBadge from './StatusBadge.jsx';
 
 // Displays application details for admin review
 export function ApplicationReviewDetails({ application }) {
+    // Format date to readable string
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
@@ -18,6 +19,7 @@ export function ApplicationReviewDetails({ application }) {
         });
     };
 
+    // Convert living situation code to display label
     const getLivingSituationLabel = (value) => {
         const labels = {
             'house_owned': 'House - Owned',
@@ -31,6 +33,7 @@ export function ApplicationReviewDetails({ application }) {
 
     return (
         <div className="grid md:grid-cols-3 gap-6">
+            {/* Pet info sidebar */}
             <div className="md:col-span-1">
                 <div className="panel sticky top-4">
                     <div
@@ -49,7 +52,9 @@ export function ApplicationReviewDetails({ application }) {
                 </div>
             </div>
 
+            {/* Application details section */}
             <div className="md:col-span-2 space-y-4">
+                {/* Applicant information panel */}
                 <div className="panel">
                     <h3 className="text-lg font-semibold mb-4">Applicant Information</h3>
                     <div className="grid grid-cols-2 gap-4">
@@ -72,6 +77,7 @@ export function ApplicationReviewDetails({ application }) {
                     </div>
                 </div>
 
+                {/* Application details panel */}
                 <div className="panel">
                     <h3 className="text-lg font-semibold mb-4">Application Details</h3>
 
@@ -85,6 +91,7 @@ export function ApplicationReviewDetails({ application }) {
                         <div>{application.has_other_pets ? 'Yes' : 'No'}</div>
                     </div>
 
+                    {/* Other pets details if applicable */}
                     {application.has_other_pets && application.other_pets_details && (
                         <div className="mb-4">
                             <div className="text-[#B6C6DA] text-sm mb-1">Other Pets Details</div>
@@ -94,6 +101,7 @@ export function ApplicationReviewDetails({ application }) {
                         </div>
                     )}
 
+                    {/* Application message */}
                     <div>
                         <div className="text-[#B6C6DA] text-sm mb-1">Why They Want to Adopt</div>
                         <div className="bg-[#0A192F] rounded-xl p-3 border border-[#1b355e]">
@@ -106,15 +114,16 @@ export function ApplicationReviewDetails({ application }) {
     );
 }
 
-// Admin actions for reviewing applications
+// Admin action buttons for reviewing applications
 export function ApplicationReviewActions({
-    adminNotes,
-    onNotesChange,
-    onApprove,
-    onReject,
-    isSubmitting,
-    isPending
-}) {
+                                             adminNotes,
+                                             onNotesChange,
+                                             onApprove,
+                                             onReject,
+                                             isSubmitting,
+                                             isPending
+                                         }) {
+    // Only show actions for pending applications
     if (!isPending) {
         return null;
     }
@@ -123,6 +132,7 @@ export function ApplicationReviewActions({
         <div className="panel mt-6">
             <h3 className="text-lg font-semibold mb-4">Review Decision</h3>
 
+            {/* Admin notes textarea */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">
                     Admin Notes (Required for rejection)
@@ -138,6 +148,7 @@ export function ApplicationReviewActions({
                 />
             </div>
 
+            {/* Approve and reject buttons */}
             <div className="flex gap-4">
                 <button
                     onClick={onApprove}
@@ -158,7 +169,4 @@ export function ApplicationReviewActions({
             </div>
         </div>
     );
-}
-
-export default class PendingApplicationsTable {
 }

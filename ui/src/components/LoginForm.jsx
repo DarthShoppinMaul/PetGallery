@@ -1,28 +1,30 @@
 // LoginForm.jsx
-// Login form with email/password fields
+// Login form with email and password fields
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function LoginForm({
-    email,
-    password,
-    rememberMe,
-    errors,
-    isSubmitting,
-    onEmailChange,
-    onPasswordChange,
-    onRememberMeChange,
-    onSubmit
-}) {
+                                      email,
+                                      password,
+                                      rememberMe,
+                                      errors,
+                                      isSubmitting,
+                                      onEmailChange,
+                                      onPasswordChange,
+                                      onRememberMeChange,
+                                      onSubmit
+                                  }) {
     return (
         <form onSubmit={onSubmit}>
+            {/* Submit error message */}
             {errors.submit && (
                 <div className="mb-4 p-3 bg-red-900/30 border border-red-500 text-red-400 rounded-xl">
                     {errors.submit}
                 </div>
             )}
 
+            {/* Email input */}
             <div className="mb-4">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium">Email</label>
                 <input
@@ -43,6 +45,7 @@ export default function LoginForm({
                 )}
             </div>
 
+            {/* Password input */}
             <div className="mb-4">
                 <label htmlFor="password" className="block mb-2 text-sm font-medium">Password</label>
                 <input
@@ -63,6 +66,7 @@ export default function LoginForm({
                 )}
             </div>
 
+            {/* Remember me checkbox */}
             <div className="flex items-center justify-between mb-6">
                 <label className="flex items-center cursor-pointer">
                     <input
@@ -77,6 +81,7 @@ export default function LoginForm({
                 </label>
             </div>
 
+            {/* Submit button */}
             <button
                 type="submit"
                 className="btn w-full mb-4"
@@ -86,6 +91,7 @@ export default function LoginForm({
                 {isSubmitting ? 'Logging in...' : 'Login'}
             </button>
 
+            {/* Register link */}
             <div className="mt-6 text-sm text-center text-[#B6C6DA]">
                 Don't have an account?{' '}
                 <Link to="/register" className="text-[#64FFDA] hover:underline font-medium" data-cy="register-link">

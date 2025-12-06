@@ -1,5 +1,6 @@
 // PetList.jsx
-// Pet browsing page with filters and favorites
+// Main pet browsing page with search, filtering, and favorites functionality
+// Displays pets in a grid layout with species, location, and status filters
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,10 +15,12 @@ export default function PetList() {
     const { user } = useAuth();
     const navigate = useNavigate();
 
+    // Fetch pets, locations, and user favorites
     const { pets, loading: petsLoading, error: petsError, refetch } = usePets();
     const { locations, loading: locationsLoading } = useLocations();
     const { favorites, toggleFavorite, isFavorite } = useFavorites(user?.user_id);
 
+    // Filter state for search and dropdowns
     const [filters, setFilters] = useState({
         species: '',
         location: '',
@@ -25,6 +28,7 @@ export default function PetList() {
         search: ''
     });
 
+    // Toggle favorite with login requirement check
     const handleToggleFavorite = (petId) => {
         if (!user) {
             alert('Please login to favorite pets');
@@ -34,6 +38,7 @@ export default function PetList() {
         toggleFavorite(petId);
     };
 
+    // Apply all active filters to the pet list
     const filteredPets = pets.filter(pet => {
         if (filters.species && pet.species.toLowerCase() !== filters.species.toLowerCase()) return false;
         if (filters.location && pet.location_id.toString() !== filters.location) return false;
@@ -42,6 +47,7 @@ export default function PetList() {
         return true;
     });
 
+    // Extract unique species for filter dropdown
     const uniqueSpecies = [...new Set(pets.map(p => p.species))].sort();
 
     if (petsLoading || locationsLoading) {

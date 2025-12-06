@@ -1,16 +1,12 @@
 // Dashboard.jsx
-// Consolidated components for the Admin Dashboard page
-// Contains statistics cards, quick action buttons, and pending applications table
+// Components for the Admin Dashboard page
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../services/api.js';
 
 // Statistics cards displaying key admin metrics
-// Shows total pets, locations, users, and pending applications count
-// Pending applications highlighted in yellow for visibility
 export function DashboardStats({ stats }) {
-    // Configuration for each stat card
     const statItems = [
         { label: 'Total Pets', value: stats.totalPets, color: 'text-[#64FFDA]' },
         { label: 'Locations', value: stats.totalLocations, color: 'text-[#64FFDA]' },
@@ -20,7 +16,6 @@ export function DashboardStats({ stats }) {
 
     return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {/* Render each stat as a card */}
             {statItems.map((item, index) => (
                 <div key={index} className="panel text-center py-6">
                     <div className={`text-3xl font-bold ${item.color} mb-1`}>
@@ -34,11 +29,9 @@ export function DashboardStats({ stats }) {
 }
 
 // Quick action navigation buttons for common admin tasks
-// Provides shortcuts to add pets, locations, manage users, and view all pets
 export function QuickActions() {
     const navigate = useNavigate();
 
-    // Action configuration with labels, routes, and icon letters
     const actions = [
         { label: 'Add Pet', path: '/add-pet', icon: 'P' },
         { label: 'Add Location', path: '/add-location', icon: 'L' },
@@ -48,7 +41,6 @@ export function QuickActions() {
 
     return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {/* Render each action as a clickable button */}
             {actions.map((action, index) => (
                 <button
                     key={index}
@@ -64,8 +56,6 @@ export function QuickActions() {
 }
 
 // Table displaying pending adoption applications for admin review
-// Shows pet info, applicant details, submission date, and wait time
-// Highlights applications waiting more than 3 days in yellow
 export function PendingApplicationsTable({ applications }) {
     const navigate = useNavigate();
 
@@ -91,56 +81,51 @@ export function PendingApplicationsTable({ applications }) {
     return (
         <div className="overflow-x-auto">
             <table className="w-full">
-                {/* Table header */}
                 <thead>
-                    <tr className="border-b border-[#1b355e]">
-                        <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Pet</th>
-                        <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Applicant</th>
-                        <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Date</th>
-                        <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Waiting</th>
-                        <th className="text-right py-3 px-4 font-medium text-[#E6F1FF]">Action</th>
-                    </tr>
+                <tr className="border-b border-[#1b355e]">
+                    <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Pet</th>
+                    <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Applicant</th>
+                    <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Date</th>
+                    <th className="text-left py-3 px-4 font-medium text-[#E6F1FF]">Waiting</th>
+                    <th className="text-right py-3 px-4 font-medium text-[#E6F1FF]">Action</th>
+                </tr>
                 </thead>
-                {/* Table body with application rows */}
                 <tbody>
-                    {applications.map(app => (
-                        <tr key={app.application_id} className="border-b border-[#1b355e] last:border-b-0">
-                            {/* Pet column with thumbnail and name */}
-                            <td className="py-3 px-4">
-                                <div className="flex items-center gap-3">
-                                    <div
-                                        className="w-10 h-10 bg-[#152e56] rounded-lg bg-cover bg-center"
-                                        style={{
-                                            backgroundImage: app.pet_photo_url
-                                                ? `url(${API_BASE_URL}/${app.pet_photo_url})`
-                                                : undefined
-                                        }}
-                                    />
-                                    <span className="font-medium">{app.pet_name}</span>
-                                </div>
-                            </td>
-                            {/* Applicant name or email fallback */}
-                            <td className="py-3 px-4">{app.user_display_name || app.user_email}</td>
-                            {/* Submission date */}
-                            <td className="py-3 px-4">{formatDate(app.application_date)}</td>
-                            {/* Days waiting with yellow highlight if over 3 days */}
-                            <td className="py-3 px-4">
+                {applications.map(app => (
+                    <tr key={app.application_id} className="border-b border-[#1b355e] last:border-b-0">
+                        {/* Pet column with thumbnail */}
+                        <td className="py-3 px-4">
+                            <div className="flex items-center gap-3">
+                                <div
+                                    className="w-10 h-10 bg-[#152e56] rounded-lg bg-cover bg-center"
+                                    style={{
+                                        backgroundImage: app.pet_photo_url
+                                            ? `url(${API_BASE_URL}/${app.pet_photo_url})`
+                                            : undefined
+                                    }}
+                                />
+                                <span className="font-medium">{app.pet_name}</span>
+                            </div>
+                        </td>
+                        <td className="py-3 px-4">{app.user_display_name || app.user_email}</td>
+                        <td className="py-3 px-4">{formatDate(app.application_date)}</td>
+                        {/* Highlight applications waiting over 3 days */}
+                        <td className="py-3 px-4">
                                 <span className={`${app.days_waiting > 3 ? 'text-yellow-400' : ''}`}>
                                     {app.days_waiting} days
                                 </span>
-                            </td>
-                            {/* Review action button */}
-                            <td className="py-3 px-4 text-right">
-                                <button
-                                    onClick={() => navigate(`/admin/application/${app.application_id}`)}
-                                    className="btn-sm"
-                                    data-cy={`review-app-${app.application_id}`}
-                                >
-                                    Review
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                        </td>
+                        <td className="py-3 px-4 text-right">
+                            <button
+                                onClick={() => navigate(`/admin/application/${app.application_id}`)}
+                                className="btn-sm"
+                                data-cy={`review-app-${app.application_id}`}
+                            >
+                                Review
+                            </button>
+                        </td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
         </div>

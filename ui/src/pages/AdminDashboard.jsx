@@ -1,5 +1,6 @@
 // AdminDashboard.jsx
-// Admin dashboard with stats and pending applications
+// Admin dashboard displaying system statistics and pending adoption applications
+// Provides quick access to management functions and application review
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,12 +15,14 @@ export default function AdminDashboard() {
     const { user } = useAuth();
     const navigate = useNavigate();
 
+    // Fetch all data needed for dashboard display
     const { pets, loading: petsLoading } = usePets();
     const { locations, loading: locationsLoading } = useLocations();
     const { users, loading: usersLoading } = useUsers();
     const { applications, loading: appsLoading } = useApplications('pending');
     const { stats: appStats, loading: statsLoading } = useApplicationStats();
 
+    // Redirect non-admin users to home page
     useEffect(() => {
         if (!user?.is_admin) {
             navigate('/');
@@ -32,6 +35,7 @@ export default function AdminDashboard() {
         return <LoadingSpinner message="Loading dashboard..." />;
     }
 
+    // Calculate days waiting for each application and sort by longest wait
     const processedApplications = applications.map(app => {
         const applicationDate = new Date(app.application_date);
         const today = new Date();
@@ -40,6 +44,7 @@ export default function AdminDashboard() {
         return { ...app, days_waiting: diffDays };
     }).sort((a, b) => b.days_waiting - a.days_waiting).slice(0, 5);
 
+    // Aggregate statistics for dashboard cards
     const stats = {
         totalPets: pets.length,
         totalLocations: locations.length,

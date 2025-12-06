@@ -1,5 +1,5 @@
 // LoadingSpinner.jsx
-// Displays a loading indicator
+// Displays a loading indicator with optional message
 
 import React from 'react';
 

@@ -1,5 +1,6 @@
 // AdoptionApplicationForm.jsx
-// Form for users to apply to adopt a pet
+// Allows authenticated users to submit an adoption application for a specific pet
+// Includes form validation, pet preview sidebar, and submission handling
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -15,9 +16,11 @@ export default function AdoptionApplicationForm() {
     const { user } = useAuth();
     const navigate = useNavigate();
 
+    // Fetch pet details and application submission hook
     const { pet, loading } = usePet(petId);
     const { createApplication, loading: submitting } = useCreateApplication();
 
+    // Form state management
     const [formData, setFormData] = useState({
         applicationMessage: '',
         contactPhone: user?.phone || '',
@@ -27,12 +30,14 @@ export default function AdoptionApplicationForm() {
     });
     const [errors, setErrors] = useState({});
 
+    // Redirect unauthenticated users to login
     useEffect(() => {
         if (!user) {
             navigate('/login');
         }
     }, [user, navigate]);
 
+    // Handle form field changes and clear related errors
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         const newValue = type === 'checkbox' ? checked : value;
@@ -44,6 +49,7 @@ export default function AdoptionApplicationForm() {
         }
     };
 
+    // Validate all form fields before submission
     const validateForm = () => {
         const newErrors = {};
 
@@ -71,6 +77,7 @@ export default function AdoptionApplicationForm() {
         return Object.keys(newErrors).length === 0;
     };
 
+    // Submit application to backend API
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -133,7 +140,7 @@ export default function AdoptionApplicationForm() {
                         />
                         <h2 className="text-xl font-semibold mb-2">{pet.name}</h2>
                         <div className="text-[#B6C6DA] text-sm">
-                            {pet.species} • {pet.age} {pet.age === 1 ? 'year' : 'years'} old
+                            {pet.species} â€¢ {pet.age} {pet.age === 1 ? 'year' : 'years'} old
                         </div>
                     </div>
                 </div>

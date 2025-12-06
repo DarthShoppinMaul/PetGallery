@@ -1,32 +1,33 @@
 // PetForm.jsx
-// Form for adding/editing pets with photo upload
+// Form for adding and editing pets with photo upload
 
 import React from 'react';
 import ImageFileInput from './ImageFileInput.jsx';
 
 export default function PetForm({
-    name,
-    species,
-    age,
-    locationId,
-    description,
-    photo,
-    currentPhotoUrl,
-    locations,
-    errors,
-    isSubmitting,
-    isEditing,
-    onNameChange,
-    onSpeciesChange,
-    onAgeChange,
-    onLocationChange,
-    onDescriptionChange,
-    onPhotoChange,
-    onSubmit,
-    onCancel
-}) {
+                                    name,
+                                    species,
+                                    age,
+                                    locationId,
+                                    description,
+                                    photo,
+                                    currentPhotoUrl,
+                                    locations,
+                                    errors,
+                                    isSubmitting,
+                                    isEditing,
+                                    onNameChange,
+                                    onSpeciesChange,
+                                    onAgeChange,
+                                    onLocationChange,
+                                    onDescriptionChange,
+                                    onPhotoChange,
+                                    onSubmit,
+                                    onCancel
+                                }) {
     return (
         <form onSubmit={onSubmit}>
+            {/* Name and species row */}
             <div className="flex flex-wrap gap-4">
                 <div className="min-w-[240px] flex-1">
                     <label className="block mb-2 text-sm font-medium">Pet Name *</label>
@@ -59,6 +60,7 @@ export default function PetForm({
                 </div>
             </div>
 
+            {/* Age and location row */}
             <div className="flex flex-wrap gap-4 mt-4">
                 <div className="max-w-[200px] flex-1">
                     <label className="block mb-2 text-sm font-medium">Age (years) *</label>
@@ -101,6 +103,7 @@ export default function PetForm({
                 </div>
             </div>
 
+            {/* Description textarea */}
             <div className="mt-4">
                 <label className="block mb-2 text-sm font-medium">Description</label>
                 <textarea
@@ -112,6 +115,7 @@ export default function PetForm({
                 />
             </div>
 
+            {/* Photo upload */}
             <div className="flex flex-wrap gap-4 mt-4">
                 <div className="max-w-[400px] flex-1">
                     <ImageFileInput
@@ -126,6 +130,7 @@ export default function PetForm({
                 </div>
             </div>
 
+            {/* Form action buttons */}
             <div className="h-4" />
             <button
                 type="submit"

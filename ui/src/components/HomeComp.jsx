@@ -1,20 +1,16 @@
 // HomeComp.jsx
-// Consolidated components for the Home page landing experience
-// Contains hero banner, statistics, featured pets grid, process steps, and call-to-action
+// Components for the Home page landing experience
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../services/api.js';
 
-// Hero banner displayed at the top of the home page
-// Shows main headline, tagline, and navigation buttons
-// Conditionally renders sign-up button based on authentication state
+// Hero banner with main headline and action buttons
 export function HeroSection({ user }) {
     const navigate = useNavigate();
 
     return (
         <section className="relative overflow-hidden py-20 mb-12">
-            {/* Gradient overlay for visual depth */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#64FFDA]/10 to-transparent"></div>
             <div className="relative text-center max-w-4xl mx-auto px-6">
                 <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
@@ -24,7 +20,7 @@ export function HeroSection({ user }) {
                 <p className="text-xl text-[#B6C6DA] mb-8 leading-relaxed">
                     Give a loving home to a pet in need. Browse our adoptable pets and start your journey to finding a new best friend.
                 </p>
-                {/* Action buttons change based on user auth state */}
+                {/* Action buttons based on auth state */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <button onClick={() => navigate('/pets')} className="btn text-lg px-8 py-3">
                         Browse Pets
@@ -41,22 +37,18 @@ export function HeroSection({ user }) {
 }
 
 // Statistics section displaying platform metrics
-// Shows total pets available, partner locations count, and completed adoptions
 export function StatsSection({ stats }) {
     return (
         <section className="mb-16">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Total pets stat card */}
                 <div className="panel text-center py-8">
                     <div className="text-4xl font-bold text-[#64FFDA] mb-2">{stats.totalPets}+</div>
                     <div className="text-[#B6C6DA]">Pets Available</div>
                 </div>
-                {/* Locations stat card */}
                 <div className="panel text-center py-8">
                     <div className="text-4xl font-bold text-[#64FFDA] mb-2">{stats.locations}</div>
                     <div className="text-[#B6C6DA]">Partner Locations</div>
                 </div>
-                {/* Adoptions stat card */}
                 <div className="panel text-center py-8">
                     <div className="text-4xl font-bold text-[#64FFDA] mb-2">{stats.happyAdoptions}+</div>
                     <div className="text-[#B6C6DA]">Happy Adoptions</div>
@@ -67,14 +59,12 @@ export function StatsSection({ stats }) {
 }
 
 // Featured pets grid showcasing available pets
-// Displays up to 4 pet cards with photos and basic info
-// Handles loading state and empty state messaging
 export function FeaturedPets({ pets, loading }) {
     const navigate = useNavigate();
 
     return (
         <section className="mb-16">
-            {/* Section header with view all link */}
+            {/* Section header */}
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-bold">Featured Pets</h2>
                 <button
@@ -88,13 +78,13 @@ export function FeaturedPets({ pets, loading }) {
                 </button>
             </div>
 
-            {/* Conditional rendering based on loading and data state */}
+            {/* Loading and empty states */}
             {loading ? (
                 <div className="text-center py-12 text-[#B6C6DA]">Loading pets...</div>
             ) : pets.length === 0 ? (
                 <div className="text-center py-12 text-[#B6C6DA]">No pets available yet.</div>
             ) : (
-                /* Pet cards grid layout */
+                // Pet cards grid
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {pets.map(pet => (
                         <div
@@ -102,7 +92,6 @@ export function FeaturedPets({ pets, loading }) {
                             className="card cursor-pointer hover:border-[#64FFDA] transition-all"
                             onClick={() => navigate(`/pet/${pet.pet_id}`)}
                         >
-                            {/* Pet photo with background image */}
                             <div
                                 className="card-img"
                                 style={{
@@ -111,7 +100,6 @@ export function FeaturedPets({ pets, loading }) {
                                         : undefined
                                 }}
                             />
-                            {/* Pet details and action button */}
                             <div className="card-body">
                                 <div className="font-semibold text-lg mb-1">{pet.name}</div>
                                 <div className="meta mb-3">
@@ -128,10 +116,7 @@ export function FeaturedPets({ pets, loading }) {
 }
 
 // Three-step process explanation section
-// Displays Browse, Apply, and Adopt steps with icons
-// Helps users understand the adoption workflow
 export function HowItWorks() {
-    // Step configuration with SVG icons, titles, and descriptions
     const steps = [
         {
             icon: (
@@ -165,11 +150,9 @@ export function HowItWorks() {
     return (
         <section className="mb-16">
             <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
-            {/* Steps grid with icons and descriptions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {steps.map((step, index) => (
                     <div key={index} className="text-center">
-                        {/* Circular icon container */}
                         <div className="w-16 h-16 bg-[#64FFDA]/20 rounded-full flex items-center justify-center mx-auto mb-4">
                             {step.icon}
                         </div>
@@ -182,9 +165,7 @@ export function HowItWorks() {
     );
 }
 
-// Call-to-action section at the bottom of home page
-// Encourages users to browse pets or sign up
-// Button text changes based on authentication state
+// Call-to-action section at bottom of home page
 export function CallToAction({ user }) {
     const navigate = useNavigate();
 
@@ -194,7 +175,6 @@ export function CallToAction({ user }) {
             <p className="text-lg text-[#B6C6DA] mb-8 max-w-2xl mx-auto">
                 Every pet deserves a loving home. Start your adoption journey today and change a life forever.
             </p>
-            {/* Dynamic button based on login state */}
             <button
                 onClick={() => navigate(user ? '/pets' : '/register')}
                 className="btn text-lg px-8 py-3"

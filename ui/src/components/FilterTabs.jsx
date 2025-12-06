@@ -4,6 +4,7 @@
 import React from 'react';
 
 export default function FilterTabs({ filter, onFilterChange, counts }) {
+    // Tab configuration
     const tabs = [
         { key: 'all', label: 'All' },
         { key: 'pending', label: 'Pending' },

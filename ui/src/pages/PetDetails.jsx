@@ -1,5 +1,6 @@
 // PetDetails.jsx
-// Pet details page with favorite and apply to adopt functionality
+// Displays detailed information about a specific pet
+// Includes favorite toggle, location info, and apply button for authenticated users
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -16,12 +17,15 @@ export default function PetDetails() {
     const { user } = useAuth();
     const navigate = useNavigate();
 
+    // Fetch pet details and related data
     const { pet, loading, error } = usePet(id);
     const { locations } = useLocations();
     const { isFavorite, toggleFavorite } = useFavorites(user?.user_id);
 
+    // Find the location associated with this pet
     const location = locations.find(l => l.location_id === pet?.location_id);
 
+    // Toggle favorite status with login check
     const handleToggleFavorite = () => {
         if (!user) {
             alert('Please login to favorite pets');
@@ -31,6 +35,7 @@ export default function PetDetails() {
         toggleFavorite(pet.pet_id);
     };
 
+    // Navigate to adoption application form with login check
     const handleApplyToAdopt = () => {
         if (!user) {
             alert('Please login to apply for adoption');
@@ -101,7 +106,7 @@ export default function PetDetails() {
                             <div>
                                 <h1 className="text-3xl font-bold mb-2">{pet.name}</h1>
                                 <div className="text-lg text-[#B6C6DA]">
-                                    {pet.species} • {pet.age} {pet.age === 1 ? 'year' : 'years'} old
+                                    {pet.species} â€¢ {pet.age} {pet.age === 1 ? 'year' : 'years'} old
                                 </div>
                             </div>
                             <StatusBadge status={pet.status} />

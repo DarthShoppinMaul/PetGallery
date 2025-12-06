@@ -1,11 +1,13 @@
 // PetLocationInfo.jsx
-// Displays location details for a pet
+// Displays shelter or adoption center location details for a pet
 
 import React from 'react';
 
 export default function PetLocationInfo({ location }) {
+    // Returns nothing if no location data provided
     if (!location) return null;
 
+    // Renders location card with name, address, and optional phone
     return (
         <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Location</h2>

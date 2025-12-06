@@ -1,5 +1,5 @@
 // ApplicationsList.jsx
-// Displays a list of user's applications
+// Displays a list of user's adoption applications
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import StatusBadge from './StatusBadge.jsx';
 export default function ApplicationsList({ applications, emptyMessage }) {
     const navigate = useNavigate();
 
+    // Format date to readable string
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
@@ -18,6 +19,7 @@ export default function ApplicationsList({ applications, emptyMessage }) {
         });
     };
 
+    // Empty state display
     if (applications.length === 0) {
         return (
             <div className="panel text-center py-12">
@@ -37,6 +39,7 @@ export default function ApplicationsList({ applications, emptyMessage }) {
             {applications.map(app => (
                 <div key={app.application_id} className="panel">
                     <div className="flex gap-4">
+                        {/* Pet photo thumbnail */}
                         <div
                             className="w-32 h-32 bg-[#152e56] rounded-xl bg-cover bg-center flex-shrink-0"
                             style={{
@@ -46,24 +49,27 @@ export default function ApplicationsList({ applications, emptyMessage }) {
                             }}
                         />
 
+                        {/* Application details */}
                         <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between gap-4 mb-3">
                                 <div>
                                     <h3 className="text-xl font-semibold mb-1">{app.pet_name}</h3>
                                     <div className="text-[#B6C6DA] text-sm">
-                                        {app.pet_species} • {app.pet_age} years old
+                                        {app.pet_species} - {app.pet_age} years old
                                     </div>
                                 </div>
                                 <StatusBadge status={app.status} />
                             </div>
 
+                            {/* Application dates */}
                             <div className="text-sm text-[#B6C6DA] mb-3">
                                 Applied on {formatDate(app.application_date)}
                                 {app.reviewed_at && (
-                                    <span> • Reviewed on {formatDate(app.reviewed_at)}</span>
+                                    <span> - Reviewed on {formatDate(app.reviewed_at)}</span>
                                 )}
                             </div>
 
+                            {/* Admin notes display */}
                             {app.admin_notes && (
                                 <div className={`rounded-xl p-3 mb-3 border ${
                                     app.status === 'approved'

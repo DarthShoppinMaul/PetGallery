@@ -1,10 +1,10 @@
 // RegistrationForm.jsx
-// Registration form with validation and password strength indicator
+// User registration form with validation and password strength indicator
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Password strength indicator component (internal)
+// Visual indicator showing password strength level
 function PasswordStrengthIndicator({ strength }) {
     if (!strength) return null;
 
@@ -22,6 +22,7 @@ function PasswordStrengthIndicator({ strength }) {
 
     return (
         <div className="mt-2">
+            {/* Three-bar strength indicator */}
             <div className="flex gap-1 h-1">
                 <div className={`flex-1 rounded-full ${strength ? colors[strength] : 'bg-[#233554]'} ${widths[strength]}`}></div>
                 <div className={`flex-1 rounded-full ${strength === 'medium' || strength === 'strong' ? colors[strength] : 'bg-[#233554]'}`}></div>
@@ -35,21 +36,23 @@ function PasswordStrengthIndicator({ strength }) {
 }
 
 export default function RegistrationForm({
-    formData,
-    errors,
-    isSubmitting,
-    passwordStrength,
-    onChange,
-    onSubmit
-}) {
+                                             formData,
+                                             errors,
+                                             isSubmitting,
+                                             passwordStrength,
+                                             onChange,
+                                             onSubmit
+                                         }) {
     return (
         <form onSubmit={onSubmit}>
+            {/* Server error message display */}
             {errors.submit && (
                 <div className="mb-4 p-3 bg-red-900/30 border border-red-500 text-red-400 rounded-xl">
                     {errors.submit}
                 </div>
             )}
 
+            {/* Email input field */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Email *</label>
                 <input
@@ -67,6 +70,7 @@ export default function RegistrationForm({
                 )}
             </div>
 
+            {/* Display name input field */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Display Name *</label>
                 <input
@@ -84,6 +88,7 @@ export default function RegistrationForm({
                 )}
             </div>
 
+            {/* Optional phone number field */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Phone (Optional)</label>
                 <input
@@ -101,6 +106,7 @@ export default function RegistrationForm({
                 )}
             </div>
 
+            {/* Password field with strength indicator */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Password *</label>
                 <input
@@ -119,6 +125,7 @@ export default function RegistrationForm({
                 <PasswordStrengthIndicator strength={passwordStrength} />
             </div>
 
+            {/* Password confirmation field */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Confirm Password *</label>
                 <input
@@ -136,6 +143,7 @@ export default function RegistrationForm({
                 )}
             </div>
 
+            {/* Terms and conditions checkbox */}
             <div className="mb-6">
                 <label className="flex items-start cursor-pointer">
                     <input
@@ -162,6 +170,7 @@ export default function RegistrationForm({
                 )}
             </div>
 
+            {/* Submit button */}
             <button
                 type="submit"
                 className="btn w-full mb-4"
@@ -171,6 +180,7 @@ export default function RegistrationForm({
                 {isSubmitting ? 'Creating Account...' : 'Create Account'}
             </button>
 
+            {/* Link to login page */}
             <div className="mt-6 text-sm text-center text-[#B6C6DA]">
                 Already have an account?{' '}
                 <Link to="/login" className="text-[#64FFDA] hover:underline font-medium" data-cy="login-link">

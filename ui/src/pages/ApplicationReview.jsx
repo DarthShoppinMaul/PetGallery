@@ -14,25 +14,30 @@ export default function ApplicationReview() {
     const { user } = useAuth();
     const navigate = useNavigate();
 
+    // Fetch application data and update function
     const { application, loading, error, refetch } = useApplication(id);
     const { updateApplication } = useUpdateApplication();
 
+    // Form state for admin notes and submission status
     const [adminNotes, setAdminNotes] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [actionError, setActionError] = useState(null);
 
+    // Redirect non-admin users to home page
     useEffect(() => {
         if (!user?.is_admin) {
             navigate('/');
         }
     }, [user, navigate]);
 
+    // Populate admin notes when application loads
     useEffect(() => {
         if (application) {
             setAdminNotes(application.admin_notes || '');
         }
     }, [application]);
 
+    // Handle application approval with confirmation
     const handleApprove = async () => {
         if (!confirm(`Approve application for ${application.pet_name}?`)) return;
 
@@ -54,6 +59,7 @@ export default function ApplicationReview() {
         setIsSubmitting(false);
     };
 
+    // Handle application rejection with required notes
     const handleReject = async () => {
         if (!adminNotes.trim()) {
             alert('Please add admin notes explaining the rejection reason.');
@@ -80,16 +86,19 @@ export default function ApplicationReview() {
         setIsSubmitting(false);
     };
 
+    // Show loading state while fetching application
     if (loading) {
         return <LoadingSpinner message="Loading application..." />;
     }
 
+    // Show error state if application not found
     if (error || !application) {
         return <ErrorMessage message={error || 'Application not found'} onRetry={refetch} />;
     }
 
     return (
         <div className="container-narrow">
+            {/* Back navigation button */}
             <button
                 onClick={() => navigate('/admin/dashboard')}
                 className="mb-4 text-[#64FFDA] hover:underline flex items-center gap-2"
@@ -102,14 +111,17 @@ export default function ApplicationReview() {
 
             <h1 className="text-3xl mb-6">Review Application</h1>
 
+            {/* Error message display */}
             {actionError && (
                 <div className="mb-4 p-3 bg-red-900/30 border border-red-500 text-red-400 rounded-xl">
                     {actionError}
                 </div>
             )}
 
+            {/* Application details component */}
             <ApplicationReviewDetails application={application} />
 
+            {/* Admin action buttons for approve/reject */}
             <ApplicationReviewActions
                 adminNotes={adminNotes}
                 onNotesChange={setAdminNotes}

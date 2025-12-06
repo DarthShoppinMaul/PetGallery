@@ -1,5 +1,7 @@
 // FavoriteButton.jsx
-// Heart button for adding/removing pets from favorites
+// Toggleable heart icon button for favoriting pets
+// Shows filled red heart when favorited, outline heart when not
+// Props: isFavorite - boolean state, onClick - toggle handler
 
 import React from 'react';
 

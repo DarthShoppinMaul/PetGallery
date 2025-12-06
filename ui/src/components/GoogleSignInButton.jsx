@@ -4,6 +4,7 @@
 import React from 'react';
 
 export default function GoogleSignInButton({ disabled = false }) {
+    // Redirect to backend OAuth endpoint
     const handleClick = () => {
         window.location.href = 'http://localhost:8000/auth/google/login';
     };
@@ -16,6 +17,7 @@ export default function GoogleSignInButton({ disabled = false }) {
             disabled={disabled}
             data-cy="google-signin-button"
         >
+            {/* Google logo SVG */}
             <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
                     fill="#4285F4"

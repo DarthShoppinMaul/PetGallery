@@ -4,19 +4,21 @@
 import React from 'react';
 import { API_BASE_URL } from '../services/api.js';
 
+// File size and type constraints
 const MAX_FILE_SIZE_MB = 2;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
 
-export default function ImageFileInput({ 
-    id,
-    label,
-    currentImageUrl,
-    selectedFile,
-    onChange,
-    error,
-    showCurrentImage = false
-}) {
+export default function ImageFileInput({
+                                           id,
+                                           label,
+                                           currentImageUrl,
+                                           selectedFile,
+                                           onChange,
+                                           error,
+                                           showCurrentImage = false
+                                       }) {
+    // Validate and handle file selection
     const handleFileChange = (e) => {
         const file = e.target.files?.[0];
         if (!file) {
@@ -24,6 +26,7 @@ export default function ImageFileInput({
             return;
         }
 
+        // Validate file size
         let validationError = null;
         if (file.size > MAX_FILE_SIZE_BYTES) {
             validationError = `File size must be less than ${MAX_FILE_SIZE_MB}MB`;
@@ -40,6 +43,7 @@ export default function ImageFileInput({
                 {label} (Max {MAX_FILE_SIZE_MB}MB)
             </label>
 
+            {/* Current image preview */}
             {showCurrentImage && currentImageUrl && (
                 <div className="mb-2">
                     <img
@@ -51,6 +55,7 @@ export default function ImageFileInput({
                 </div>
             )}
 
+            {/* File input */}
             <input
                 type="file"
                 id={id}
@@ -60,12 +65,14 @@ export default function ImageFileInput({
                 data-cy={`${id}-input`}
             />
 
+            {/* Error message */}
             {error && (
                 <div className="text-red-400 text-sm mt-1" data-cy={`${id}-error`}>
                     {error}
                 </div>
             )}
 
+            {/* Selected file info */}
             {selectedFile && !error && (
                 <div className="text-sm text-[#B6C6DA] mt-1">
                     Selected: {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)}MB)

@@ -3,12 +3,13 @@
 
 import React from 'react';
 
-export default function PetFilters({ 
-    filters, 
-    onFilterChange, 
-    species = [], 
-    locations = [] 
-}) {
+export default function PetFilters({
+                                       filters,
+                                       onFilterChange,
+                                       species = [],
+                                       locations = []
+                                   }) {
+    // Update single filter field
     const handleChange = (field, value) => {
         onFilterChange({ ...filters, [field]: value });
     };
@@ -16,6 +17,7 @@ export default function PetFilters({
     return (
         <div className="panel mb-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {/* Search by name */}
                 <input
                     type="text"
                     placeholder="Search by name..."
@@ -25,6 +27,7 @@ export default function PetFilters({
                     data-cy="search-input"
                 />
 
+                {/* Species filter */}
                 <select
                     className="input"
                     value={filters.species}
@@ -37,6 +40,7 @@ export default function PetFilters({
                     ))}
                 </select>
 
+                {/* Location filter */}
                 <select
                     className="input"
                     value={filters.location}
@@ -51,6 +55,7 @@ export default function PetFilters({
                     ))}
                 </select>
 
+                {/* Status filter */}
                 <select
                     className="input"
                     value={filters.status}

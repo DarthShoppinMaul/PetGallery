@@ -1,5 +1,6 @@
 // ManagePet.jsx
-// Admin page to manage pets
+// Admin page for managing pet records with photo upload support
+// Provides CRUD operations with form validation and image handling
 
 import React, { useState } from 'react';
 import { usePets, useLocations, useCreatePet, useUpdatePet, useDeletePet } from '../hooks/petHooks.js';
@@ -7,18 +8,23 @@ import PetTable from '../components/PetTable.jsx';
 import PetForm from '../components/PetForm.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
+// File upload constraints
 const MAX_FILE_SIZE_MB = 2;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 export default function ManagePet() {
+    // Data fetching and mutation hooks
     const { pets, loading: petsLoading, refetch: refetchPets } = usePets();
     const { locations, loading: locationsLoading } = useLocations();
     const { createPet } = useCreatePet();
     const { updatePet } = useUpdatePet();
     const { deletePet } = useDeletePet();
 
+    // View state: list, add, or edit mode
     const [viewMode, setViewMode] = useState('list');
     const [editingPetId, setEditingPetId] = useState(null);
+
+    // Form field state
     const [name, setName] = useState('');
     const [species, setSpecies] = useState('');
     const [age, setAge] = useState('');
@@ -30,6 +36,7 @@ export default function ManagePet() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
+    // Validate all form fields before submission
     const validateForm = () => {
         const newErrors = {};
 
@@ -58,6 +65,7 @@ export default function ManagePet() {
             newErrors.locationId = 'Please select a location';
         }
 
+        // Validate photo file size and type
         if (photo) {
             if (photo.size > MAX_FILE_SIZE_BYTES) {
                 newErrors.photo = `File size must be less than ${MAX_FILE_SIZE_MB}MB`;
@@ -72,6 +80,7 @@ export default function ManagePet() {
         return Object.keys(newErrors).length === 0;
     };
 
+    // Handle form submission for create or update
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -79,6 +88,7 @@ export default function ManagePet() {
 
         setIsSubmitting(true);
 
+        // Build FormData for multipart submission with photo
         const formData = new FormData();
         formData.append('name', name.trim());
         formData.append('species', species.trim());
@@ -112,6 +122,7 @@ export default function ManagePet() {
         setIsSubmitting(false);
     };
 
+    // Populate form with existing pet data for editing
     const handleEdit = (pet) => {
         setEditingPetId(pet.pet_id);
         setName(pet.name);
@@ -126,6 +137,7 @@ export default function ManagePet() {
         setErrors({});
     };
 
+    // Delete pet with confirmation dialog
     const handleDelete = async (petId) => {
         const pet = pets.find(p => p.pet_id === petId);
         if (!window.confirm(`Are you sure you want to delete ${pet?.name || 'this pet'}?`)) return;
@@ -139,17 +151,20 @@ export default function ManagePet() {
         }
     };
 
+    // Switch to add mode with clean form
     const handleAddNew = () => {
         setViewMode('add');
         clearForm();
         setSuccessMessage('');
     };
 
+    // Return to list view
     const handleCancel = () => {
         setViewMode('list');
         clearForm();
     };
 
+    // Reset all form fields
     const clearForm = () => {
         setEditingPetId(null);
         setName('');
@@ -162,6 +177,7 @@ export default function ManagePet() {
         setErrors({});
     };
 
+    // Handle photo file selection with validation
     const handlePhotoChange = (file, error) => {
         setPhoto(file);
         if (error) {

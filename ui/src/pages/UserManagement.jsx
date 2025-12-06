@@ -1,5 +1,6 @@
 // UserManagement.jsx
-// Admin page to manage all users
+// Admin page for managing all system users
+// Provides CRUD operations including inline editing and user creation
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,13 +14,17 @@ export default function UserManagement() {
     const { user: currentUser } = useAuth();
     const navigate = useNavigate();
 
+    // Data fetching and mutation hooks
     const { users, loading, error, refetch } = useUsers();
     const { createUser } = useCreateUser();
     const { updateUser } = useUpdateUser();
     const { deleteUser } = useDeleteUser();
 
+    // Inline editing state
     const [editingId, setEditingId] = useState(null);
     const [editedUser, setEditedUser] = useState({});
+
+    // Create user form state
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [newUser, setNewUser] = useState({
         email: '',
@@ -27,16 +32,20 @@ export default function UserManagement() {
         display_name: '',
         is_admin: false
     });
+
+    // Submission and feedback state
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [actionError, setActionError] = useState(null);
 
+    // Redirect non-admin users to home page
     useEffect(() => {
         if (currentUser && !currentUser.is_admin) {
             navigate('/');
         }
     }, [currentUser, navigate]);
 
+    // Enter inline edit mode for a user row
     const handleEditClick = (user) => {
         setEditingId(user.user_id);
         setEditedUser({
@@ -46,15 +55,18 @@ export default function UserManagement() {
         });
     };
 
+    // Cancel inline editing
     const handleCancelEdit = () => {
         setEditingId(null);
         setEditedUser({});
     };
 
+    // Update edited user field values
     const handleEditChange = (field, value) => {
         setEditedUser(prev => ({ ...prev, [field]: value }));
     };
 
+    // Save edited user changes to backend
     const handleSaveEdit = async (userId) => {
         setIsSubmitting(true);
         setActionError(null);
@@ -82,6 +94,7 @@ export default function UserManagement() {
         setIsSubmitting(false);
     };
 
+    // Delete user with confirmation
     const handleDeleteClick = async (userId) => {
         if (!confirm('Are you sure you want to delete this user?')) return;
 
@@ -100,10 +113,12 @@ export default function UserManagement() {
         setIsSubmitting(false);
     };
 
+    // Update new user form field values
     const handleNewUserChange = (field, value) => {
         setNewUser(prev => ({ ...prev, [field]: value }));
     };
 
+    // Create new user from form data
     const handleCreateUser = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);

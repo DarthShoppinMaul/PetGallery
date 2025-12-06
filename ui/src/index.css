@@ -1,84 +1,118 @@
+/* index.css */
+/* Main stylesheet for Pet Gallery application with dark navy theme */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Enable dark color scheme for browser UI elements */
 :root {
     color-scheme: dark;
 }
 
+/* Base body styles with dark navy background */
 body {
     @apply bg-[#0A192F] text-[#E6F1FF];
 }
 
-/* handy utilities for your UI (matches your navy dark theme) */
+
+
+/* Centered content container with max width */
 .container-narrow {
     @apply max-w-[1200px] mx-auto px-6 py-6;
 }
 
+/* Card-like panel with border and rounded corners */
 .panel {
     @apply bg-[#112240] border border-[#1b355e] rounded-[16px] p-5;
 }
 
+
+
+/* Small button for table actions */
 .btn-sm {
     @apply text-sm px-3 py-1.5 rounded-lg;
 }
 
-.badge {
-    @apply inline-block bg-[#32506e] text-[#E6F1FF] rounded-full px-3 py-1 text-xs;
-}
-
+/* Primary action button with teal accent */
 .btn {
     @apply inline-block rounded-xl font-semibold px-4 py-2 bg-[#64FFDA] text-[#081424];
 }
 
+/* Secondary button with subtle background */
 .btn-secondary {
     @apply inline-block rounded-xl font-semibold px-4 py-2 bg-[#233554] text-[#E6F1FF];
 }
 
+/* Destructive action button in red */
 .btn-danger {
     @apply inline-block rounded-xl font-semibold px-4 py-2 bg-[#FF6B6B] text-[#0b1222];
 }
 
+
+
+/* Text input and textarea base styles */
 .input, .textarea {
     @apply w-full bg-[#143058] text-[#E6F1FF] border border-[#3a5a86] rounded-xl px-3 py-2 outline-none;
 }
 
+/* Textarea with minimum height and vertical resize */
 .textarea {
     @apply min-h-[120px] resize-y;
 }
 
-.grid-pets {
-    @apply grid gap-5 sm:grid-cols-2 lg:grid-cols-3;
+
+
+/* Generic badge pill */
+.badge {
+    @apply inline-block bg-[#32506e] text-[#E6F1FF] rounded-full px-3 py-1 text-xs;
 }
 
-.card {
-    @apply bg-[#112240] border border-[#1b355e] rounded-[16px] overflow-hidden flex flex-col min-h-[360px];
-}
-
-.card-img {
-    @apply h-[180px] bg-[#152e56] border-b border-[#1b355e] bg-cover bg-center;
-}
-
-.card-body {
-    @apply p-4 flex flex-col gap-2 flex-1;
-}
-
-.meta {
-    @apply text-[#B6C6DA] text-sm;
-}
-
+/* Location pill with teal text */
 .pill {
     @apply inline-block bg-[#233554] text-[#64FFDA] rounded-full px-3 py-1 text-xs max-w-full truncate;
 }
 
+
+
+/* Responsive grid layout for pet cards */
+.grid-pets {
+    @apply grid gap-5 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+/* Pet card container with fixed minimum height */
+.card {
+    @apply bg-[#112240] border border-[#1b355e] rounded-[16px] overflow-hidden flex flex-col min-h-[360px];
+}
+
+/* Pet card image area with background cover */
+.card-img {
+    @apply h-[180px] bg-[#152e56] border-b border-[#1b355e] bg-cover bg-center;
+}
+
+/* Pet card content area */
+.card-body {
+    @apply p-4 flex flex-col gap-2 flex-1;
+}
+
+/* Small muted text for metadata */
+.meta {
+    @apply text-[#B6C6DA] text-sm;
+}
+
+/* Description text with line clamping */
 .desc {
     @apply text-[#B6C6DA] text-sm leading-tight line-clamp-3;
 }
 
+/* Card footer with action buttons */
 .card-actions {
     @apply mt-auto flex justify-end pt-1;
 }
 
+
+
+/* Grid-based row card for list views */
 .row-card {
     @apply bg-[#112240] border border-[#1b355e] rounded-xl p-3 items-center;
     display: grid;
@@ -86,6 +120,7 @@ body {
     gap: 12px;
 }
 
+/* Row card column styles */
 .col-title {
     @apply truncate font-medium;
 }
@@ -106,7 +141,7 @@ body {
     @apply flex justify-end items-center gap-2;
 }
 
-
+/* Responsive row card layout for smaller screens */
 @media (max-width: 900px) {
     .row-card {
         grid-template-columns: 1fr 56px 1fr;
@@ -136,22 +171,31 @@ body {
     }
 }
 
+
+
+/* Sticky navigation bar at top of page */
 .navbar {
     @apply sticky top-0 z-50 bg-[#112240] border-b border-[#1b355e] flex items-center justify-between px-6 py-3;
 }
 
+/* Site title on left side of nav */
 .nav-left {
     @apply font-semibold text-lg;
 }
 
+/* Navigation links on right side */
 .nav-right a {
     @apply ml-4;
 }
 
+/* Active navigation link highlight */
 .nav-active {
     @apply text-[#64FFDA];
 }
 
+
+
+/* Toast message popup in bottom right corner */
 .toast {
     @apply fixed right-4 bottom-4 bg-[#0f2446] border border-[#1b355e] rounded-lg px-3 py-2 shadow-lg hidden;
 }

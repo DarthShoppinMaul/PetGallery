@@ -1,5 +1,6 @@
 // ManageLocation.jsx
-// Admin page to manage locations
+// Admin page for managing adoption center locations
+// Provides CRUD operations for location records with form validation
 
 import React, { useState } from 'react';
 import { useLocations, useCreateLocation, useUpdateLocation, useDeleteLocation } from '../hooks/locationHooks.js';
@@ -7,6 +8,7 @@ import LocationTable from '../components/LocationTable.jsx';
 import LocationForm from '../components/LocationForm.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
+// Client-side phone validation helper
 function isValidPhoneClient(raw) {
     const v = (raw ?? "").trim();
     if (v === "") return true;
@@ -15,13 +17,17 @@ function isValidPhoneClient(raw) {
 }
 
 export default function ManageLocation() {
+    // Data fetching and mutation hooks
     const { locations, loading, refetch } = useLocations();
     const { createLocation } = useCreateLocation();
     const { updateLocation } = useUpdateLocation();
     const { deleteLocation } = useDeleteLocation();
 
+    // View state: list, add, or edit mode
     const [viewMode, setViewMode] = useState('list');
     const [editingLocationId, setEditingLocationId] = useState(null);
+
+    // Form field state
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
@@ -29,6 +35,7 @@ export default function ManageLocation() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
+    // Validate form fields before submission
     const validateForm = () => {
         const newErrors = {};
 
@@ -50,6 +57,7 @@ export default function ManageLocation() {
         return Object.keys(newErrors).length === 0;
     };
 
+    // Handle form submission for create or update
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -82,6 +90,7 @@ export default function ManageLocation() {
         setIsSubmitting(false);
     };
 
+    // Populate form with existing location data for editing
     const handleEdit = (location) => {
         setEditingLocationId(location.location_id);
         setName(location.name);
@@ -92,6 +101,7 @@ export default function ManageLocation() {
         setErrors({});
     };
 
+    // Delete location with confirmation
     const handleDelete = async (locationId) => {
         if (!window.confirm('Are you sure you want to delete this location?')) return;
 
@@ -104,17 +114,20 @@ export default function ManageLocation() {
         }
     };
 
+    // Switch to add mode with clean form
     const handleAddNew = () => {
         setViewMode('add');
         clearForm();
         setSuccessMessage('');
     };
 
+    // Return to list view
     const handleCancel = () => {
         setViewMode('list');
         clearForm();
     };
 
+    // Reset all form fields
     const clearForm = () => {
         setEditingLocationId(null);
         setName('');

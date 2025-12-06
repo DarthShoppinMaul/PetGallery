@@ -1,5 +1,6 @@
 // MyApplications.jsx
-// Page for users to view their submitted adoption applications
+// Displays the current user's submitted adoption applications
+// Provides filtering by status and redirects admins to dashboard
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,10 +14,14 @@ import ErrorMessage from '../components/ErrorMessage.jsx';
 export default function MyApplications() {
     const { user } = useAuth();
     const navigate = useNavigate();
+
+    // Current filter selection
     const [filter, setFilter] = useState('all');
 
+    // Fetch user's applications
     const { applications, loading, error, refetch } = useApplications();
 
+    // Redirect unauthenticated users to login, admins to dashboard
     useEffect(() => {
         if (!user) {
             navigate('/login');
@@ -27,10 +32,12 @@ export default function MyApplications() {
         }
     }, [user, navigate]);
 
+    // Apply status filter to applications list
     const filteredApplications = filter === 'all'
         ? applications
         : applications.filter(app => app.status === filter);
 
+    // Calculate counts for each status tab
     const statusCounts = {
         all: applications.length,
         pending: applications.filter(a => a.status === 'pending').length,

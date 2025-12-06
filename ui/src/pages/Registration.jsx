@@ -1,5 +1,6 @@
 // Registration.jsx
-// User registration page with Google Sign-Up option
+// New user registration page with form validation and Google OAuth option
+// Includes password strength indicator and terms agreement requirement
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +13,7 @@ export default function Registration() {
     const { register } = useAuth();
     const navigate = useNavigate();
 
+    // Form field state
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -25,6 +27,7 @@ export default function Registration() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [passwordStrength, setPasswordStrength] = useState('');
 
+    // Evaluate password strength based on length and complexity
     const calculatePasswordStrength = (password) => {
         if (!password) return '';
         if (password.length < 6) return 'weak';
@@ -35,6 +38,7 @@ export default function Registration() {
         return 'medium';
     };
 
+    // Handle form field changes and update password strength
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         const newValue = type === 'checkbox' ? checked : value;
@@ -50,6 +54,7 @@ export default function Registration() {
         }
     };
 
+    // Validate all form fields before submission
     const validateForm = () => {
         const newErrors = {};
 
@@ -89,6 +94,7 @@ export default function Registration() {
         return Object.keys(newErrors).length === 0;
     };
 
+    // Submit registration to authentication API
     const handleSubmit = async (e) => {
         e.preventDefault();
 

@@ -1,23 +1,24 @@
 // LocationForm.jsx
-// Form for adding/editing locations
+// Form for adding and editing locations
 
 import React from 'react';
 
 export default function LocationForm({
-    name,
-    address,
-    phone,
-    errors,
-    isSubmitting,
-    isEditing,
-    onNameChange,
-    onAddressChange,
-    onPhoneChange,
-    onSubmit,
-    onCancel
-}) {
+                                         name,
+                                         address,
+                                         phone,
+                                         errors,
+                                         isSubmitting,
+                                         isEditing,
+                                         onNameChange,
+                                         onAddressChange,
+                                         onPhoneChange,
+                                         onSubmit,
+                                         onCancel
+                                     }) {
     return (
         <form onSubmit={onSubmit}>
+            {/* Location name input */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Location Name *</label>
                 <input
@@ -34,6 +35,7 @@ export default function LocationForm({
                 )}
             </div>
 
+            {/* Address input */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Address *</label>
                 <input
@@ -50,6 +52,7 @@ export default function LocationForm({
                 )}
             </div>
 
+            {/* Phone input */}
             <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">Phone</label>
                 <input
@@ -66,6 +69,7 @@ export default function LocationForm({
                 )}
             </div>
 
+            {/* Form action buttons */}
             <div className="h-4" />
             <button
                 type="submit"

@@ -1,10 +1,11 @@
 // Profile.jsx
-// Consolidated components for User Profile page
+// Components for displaying and editing user profile information
 
 import React from 'react';
 
-// Displays user profile information
+// Displays read-only user profile information with edit button
 export function ProfileInfo({ user, onEdit }) {
+    // Formats date string to readable format
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
@@ -58,21 +59,22 @@ export function ProfileInfo({ user, onEdit }) {
     );
 }
 
-// Form for editing user profile
+// Form for editing user profile with optional password change
 export function ProfileEditForm({
-    formData,
-    formErrors,
-    onChange,
-    onSubmit,
-    onCancel,
-    isSubmitting
-}) {
+                                    formData,
+                                    formErrors,
+                                    onChange,
+                                    onSubmit,
+                                    onCancel,
+                                    isSubmitting
+                                }) {
     return (
         <div className="panel">
             <h2 className="text-xl font-bold mb-6">Edit Profile</h2>
 
             <form onSubmit={onSubmit}>
                 <div className="space-y-4">
+                    {/* Display name field */}
                     <div>
                         <label className="block mb-2 text-sm font-medium">Display Name *</label>
                         <input
@@ -89,6 +91,7 @@ export function ProfileEditForm({
                         )}
                     </div>
 
+                    {/* Email field */}
                     <div>
                         <label className="block mb-2 text-sm font-medium">Email *</label>
                         <input
@@ -105,6 +108,7 @@ export function ProfileEditForm({
                         )}
                     </div>
 
+                    {/* Password change section */}
                     <div className="border-t border-[#1b355e] pt-4 mt-4">
                         <h3 className="font-medium mb-3">Change Password (Optional)</h3>
 
@@ -144,6 +148,7 @@ export function ProfileEditForm({
                     </div>
                 </div>
 
+                {/* Form action buttons */}
                 <div className="flex gap-2 mt-6">
                     <button
                         type="submit"
@@ -167,18 +172,19 @@ export function ProfileEditForm({
     );
 }
 
-// Section for deleting user account
+// Danger zone section for account deletion with confirmation
 export function DeleteAccountSection({
-    showConfirm,
-    onShowConfirm,
-    onConfirmDelete,
-    onCancelDelete,
-    isSubmitting
-}) {
+                                         showConfirm,
+                                         onShowConfirm,
+                                         onConfirmDelete,
+                                         onCancelDelete,
+                                         isSubmitting
+                                     }) {
     return (
         <div className="panel mt-6 border-red-500/30">
             <h2 className="text-xl font-bold mb-4 text-red-400">Danger Zone</h2>
 
+            {/* Initial delete button state */}
             {!showConfirm ? (
                 <div>
                     <p className="text-[#B6C6DA] mb-4">
@@ -193,6 +199,7 @@ export function DeleteAccountSection({
                     </button>
                 </div>
             ) : (
+                // Confirmation dialog with warning
                 <div className="bg-red-900/20 border border-red-500/50 rounded-xl p-4">
                     <p className="text-red-400 mb-4 font-medium">
                         Are you absolutely sure you want to delete your account?

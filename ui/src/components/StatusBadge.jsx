@@ -1,8 +1,9 @@
 // StatusBadge.jsx
-// Displays a colored status badge
+// Displays a colored status badge for pet or application status
 
 import React from 'react';
 
+// Style mappings for each status type
 const statusStyles = {
     approved: 'bg-green-900/30 text-green-400 border-green-500',
     pending: 'bg-yellow-900/30 text-yellow-400 border-yellow-500',
@@ -11,7 +12,14 @@ const statusStyles = {
 };
 
 export default function StatusBadge({ status }) {
+    // Handle undefined or empty status
+    if (!status) {
+        return null;
+    }
+
+    // Capitalize first letter of status for display
     const displayStatus = status.charAt(0).toUpperCase() + status.slice(1);
+    // Fall back to pending style if status not found
     const style = statusStyles[status] || statusStyles.pending;
 
     return (

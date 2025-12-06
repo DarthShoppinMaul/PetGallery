@@ -1,5 +1,5 @@
 // ProtectedRoute.jsx
-// Wraps pages that require authentication and redirects to login if not authenticated
+// Route wrapper that redirects unauthenticated users to login page
 
 import React from 'react';
 import { Navigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 export default function ProtectedRoute({ children }) {
     const { isAuthenticated, loading } = useAuth();
 
+    // Shows loading state while checking authentication
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -16,9 +17,11 @@ export default function ProtectedRoute({ children }) {
         );
     }
 
+    // Redirects to login if user is not authenticated
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
 
+    // Renders protected content for authenticated users
     return children;
 }
