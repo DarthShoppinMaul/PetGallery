@@ -41,9 +41,9 @@ describe('End-to-End Integration Tests', () => {
                         cy.url().should('include', `/apply/${approvedPet.pet_id}`);
 
                         const message = 'I would love to adopt this wonderful pet. I have a stable home with plenty of space and time to provide excellent care.';
-                        cy.get('textarea[name="applicationMessage"]').clear().type(message);
-                        cy.get('[data-cy="applicant-phone-input"]').clear().type('(306) 555-1111');
-                        cy.get('[data-cy="housing-type-select"]').select('house');
+                        cy.get('[data-cy="application-message-input"]').clear().type(message);
+                        cy.get('[data-cy="contact-phone-input"]').clear().type('(306) 555-1111');
+                        cy.get('[data-cy="living-situation-select"]').select('house_owned');
                         cy.get('[data-cy="submit-application-button"]').click();
 
                         cy.wait(2000);
@@ -88,7 +88,7 @@ describe('End-to-End Integration Tests', () => {
 
                         cy.get('body').then(($body) => {
                             const bodyText = $body.text();
-                            expect(bodyText).to.include('Application');
+                            expect(bodyText).to.include('Review');
                         });
 
                         cy.deletePet(pet.pet_id);
@@ -182,7 +182,6 @@ describe('End-to-End Integration Tests', () => {
             cy.visit('/admin/application/999999');
             cy.get('body', { timeout: 10000 }).should('exist');
         });
-
 
         it('should prevent deletion of location with associated pets', () => {
             cy.loginAsAdmin();

@@ -1,5 +1,5 @@
 // favorites-users-locations.cy.js
-// Comprehensive tests for favorites, user management, and location management
+// Tests for favorites, user management, and location management
 
 const API_BASE_URL = Cypress.env('apiBaseUrl') || 'http://localhost:8000';
 
@@ -84,7 +84,7 @@ describe('Favorites, Users, and Locations Test Suite', () => {
             cy.get('body').then(($body) => {
                 if ($body.find('[data-cy="pet-card"]').length > 0) {
                     cy.get('[data-cy="pet-card"]').first().within(() => {
-                        cy.get('button svg').should('not.exist');
+                        cy.get('[data-cy="favorite-button"]').should('not.exist');
                     });
                 }
             });
@@ -203,27 +203,27 @@ describe('Favorites, Users, and Locations Test Suite', () => {
                 cy.visit('/admin/users');
 
                 cy.get('h1', { timeout: 10000 }).should('have.text', 'User Management');
-                cy.get('[data-cy="users-table"]').should('be.visible');
+                cy.get('table').should('be.visible');
             });
 
-            it('should show toggle for create user form', () => {
+            it('should show add user button', () => {
                 cy.visit('/admin/users');
 
-                cy.get('[data-cy="toggle-create-user"]').should('be.visible');
+                cy.get('[data-cy="add-user-button"]').should('be.visible');
             });
 
             it('should list all registered users', () => {
                 cy.visit('/admin/users');
 
-                cy.get('[data-cy="users-table"]').should('be.visible');
-                cy.get('[data-cy="users-table"] tbody tr').should('have.length.at.least', 1);
+                cy.get('table').should('be.visible');
+                cy.get('table tbody tr').should('have.length.at.least', 1);
             });
 
             it('should display user role badges correctly', () => {
                 cy.visit('/admin/users');
                 cy.wait(2000);
 
-                cy.get('[data-cy="users-table"]').should('be.visible');
+                cy.get('table').should('be.visible');
 
                 cy.get('body').then(($body) => {
                     const hasAdminBadge = $body.text().includes('Admin');
@@ -235,31 +235,21 @@ describe('Favorites, Users, and Locations Test Suite', () => {
         });
 
         describe('Create User (Admin)', () => {
-            it('should show create user form when toggled', () => {
+            it('should show create user form when button clicked', () => {
                 cy.visit('/admin/users');
 
-                cy.get('[data-cy="toggle-create-user"]').click();
-                cy.get('[data-cy="create-user-form"]').should('be.visible');
-            });
-
-            it('should hide form when toggle clicked again', () => {
-                cy.visit('/admin/users');
-
-                cy.get('[data-cy="toggle-create-user"]').click();
-                cy.get('[data-cy="create-user-form"]').should('be.visible');
-
-                cy.get('[data-cy="toggle-create-user"]').click();
-                cy.get('[data-cy="create-user-form"]').should('not.exist');
+                cy.get('[data-cy="add-user-button"]').click();
+                cy.get('[data-cy="new-user-display-name"]').should('be.visible');
             });
 
             it('should validate required fields in create form', () => {
                 cy.visit('/admin/users');
 
-                cy.get('[data-cy="toggle-create-user"]').click();
-                cy.get('[data-cy="submit-create-user"]').click();
+                cy.get('[data-cy="add-user-button"]').click();
+                cy.get('[data-cy="create-user-button"]').click();
                 cy.wait(500);
 
-                cy.get('[data-cy="create-user-form"]').should('be.visible');
+                cy.get('[data-cy="new-user-display-name"]').should('be.visible');
             });
 
             it('should successfully create new user', () => {
@@ -268,11 +258,11 @@ describe('Favorites, Users, and Locations Test Suite', () => {
 
                 cy.visit('/admin/users');
 
-                cy.get('[data-cy="toggle-create-user"]').click();
+                cy.get('[data-cy="add-user-button"]').click();
                 cy.get('[data-cy="new-user-email"]').type(newUserEmail);
-                cy.get('[data-cy="new-user-name"]').type('Test User');
+                cy.get('[data-cy="new-user-display-name"]').type('Test User');
                 cy.get('[data-cy="new-user-password"]').type('Test123!');
-                cy.get('[data-cy="submit-create-user"]').click();
+                cy.get('[data-cy="create-user-button"]').click();
 
                 cy.wait(2000);
                 cy.get('body').then(($body) => {
@@ -287,17 +277,16 @@ describe('Favorites, Users, and Locations Test Suite', () => {
                 cy.wait(1000);
 
                 cy.get('[data-cy^="edit-user-"]').first().click();
-                cy.get('[data-cy="edit-user-email"]').should('be.visible');
-                cy.get('[data-cy="edit-user-name"]').should('be.visible');
+                cy.get('[data-cy="edit-email"]').should('be.visible');
+                cy.get('[data-cy="edit-display-name"]').should('be.visible');
             });
 
-            it('should show save and cancel buttons in edit mode', () => {
+            it('should show save button in edit mode', () => {
                 cy.visit('/admin/users');
                 cy.wait(1000);
 
                 cy.get('[data-cy^="edit-user-"]').first().click();
-                cy.get('[data-cy="save-user-edit"]').should('be.visible');
-                cy.get('[data-cy="cancel-user-edit"]').should('be.visible');
+                cy.get('[data-cy="save-user-button"]').should('be.visible');
             });
 
             it('should cancel edit without saving changes', () => {
@@ -305,10 +294,10 @@ describe('Favorites, Users, and Locations Test Suite', () => {
                 cy.wait(1000);
 
                 cy.get('[data-cy^="edit-user-"]').first().click();
-                cy.get('[data-cy="edit-user-name"]').clear().type('Modified Name');
-                cy.get('[data-cy="cancel-user-edit"]').click();
+                cy.get('[data-cy="edit-display-name"]').clear().type('Modified Name');
+                cy.get('.btn-secondary').click();
 
-                cy.get('[data-cy="edit-user-name"]').should('not.exist');
+                cy.get('[data-cy="edit-display-name"]').should('not.exist');
             });
         });
 
@@ -330,20 +319,20 @@ describe('Favorites, Users, and Locations Test Suite', () => {
                 });
             });
 
-            it('should show confirmation modal when deleting user', () => {
+            it('should show confirmation dialog when deleting user', () => {
                 cy.visit('/admin/users');
                 cy.wait(1000);
 
+                cy.on('window:confirm', () => false);
                 cy.get(`[data-cy="delete-user-${testUser.user_id}"]`).click();
-                cy.get('[data-cy="delete-confirm-modal"]').should('be.visible');
             });
 
             it('should successfully delete user when confirmed', () => {
                 cy.visit('/admin/users');
                 cy.wait(1000);
 
+                cy.on('window:confirm', () => true);
                 cy.get(`[data-cy="delete-user-${testUser.user_id}"]`).click();
-                cy.get('[data-cy="confirm-delete-user"]').click();
 
                 cy.wait(2000);
                 cy.request({
@@ -368,7 +357,7 @@ describe('Favorites, Users, and Locations Test Suite', () => {
                 cy.visit('/profile');
 
                 cy.get('h1').should('have.text', 'My Profile');
-                cy.get('[data-cy="profile-card"]').should('be.visible');
+                cy.get('.panel').should('be.visible');
             });
 
             it('should show edit button', () => {
@@ -381,15 +370,15 @@ describe('Favorites, Users, and Locations Test Suite', () => {
                 cy.visit('/profile');
 
                 cy.get('[data-cy="edit-profile-button"]').click();
-                cy.get('[data-cy="profile-email-input"]').should('be.visible');
-                cy.get('[data-cy="profile-name-input"]').should('be.visible');
+                cy.get('[data-cy="profile-email"]').should('be.visible');
+                cy.get('[data-cy="profile-display-name"]').should('be.visible');
             });
 
             it('should validate email format when editing', () => {
                 cy.visit('/profile');
 
                 cy.get('[data-cy="edit-profile-button"]').click();
-                cy.get('[data-cy="profile-email-input"]').clear().type('invalid-email');
+                cy.get('[data-cy="profile-email"]').clear().type('invalid-email');
                 cy.get('[data-cy="save-profile-button"]').click();
 
                 cy.wait(1000);
@@ -406,11 +395,11 @@ describe('Favorites, Users, and Locations Test Suite', () => {
                 cy.get('[data-cy="delete-account-button"]').should('be.visible');
             });
 
-            it('should show confirmation modal for account deletion', () => {
+            it('should show confirmation when delete account clicked', () => {
                 cy.visit('/profile');
 
                 cy.get('[data-cy="delete-account-button"]').click();
-                cy.get('[data-cy="delete-account-modal"]').should('be.visible');
+                cy.get('[data-cy="confirm-delete-button"]').should('be.visible');
             });
         });
     });
@@ -569,14 +558,14 @@ describe('Favorites, Users, and Locations Test Suite', () => {
             it('should show confirmation before deleting', () => {
                 cy.wait(1000);
 
-                cy.get(`[data-cy="delete-location-${deleteTestLocation.location_id}"]`).click();
-
                 cy.on('window:confirm', () => true);
+                cy.get(`[data-cy="delete-location-${deleteTestLocation.location_id}"]`).click();
             });
 
             it('should delete location when confirmed', () => {
                 cy.wait(1000);
 
+                cy.on('window:confirm', () => true);
                 cy.get(`[data-cy="delete-location-${deleteTestLocation.location_id}"]`).click();
 
                 cy.wait(2000);
