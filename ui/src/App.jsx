@@ -1,5 +1,5 @@
 // App.jsx
-// Main layout component with navigation bar
+// Main layout component with navigation and routing outlet
 
 import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ export default function App() {
     const { isAuthenticated, user, logout } = useAuth();
     const navigate = useNavigate();
 
+    // Handles user logout and redirects to home
     const handleLogout = async (e) => {
         e.preventDefault();
         await logout();
@@ -17,10 +18,12 @@ export default function App() {
 
     return (
         <>
+            {/* Navigation bar */}
             <nav className="navbar">
                 <div className="nav-left">Pet Gallery</div>
 
                 <div className="nav-right">
+                    {/* Public navigation links */}
                     <NavLink
                         to="/"
                         className={({ isActive }) => isActive ? 'nav-active' : ''}
@@ -35,8 +38,10 @@ export default function App() {
                         Browse Pets
                     </NavLink>
 
+                    {/* Authenticated user links */}
                     {isAuthenticated && (
                         <>
+                            {/* Regular user links */}
                             {!user?.is_admin && (
                                 <NavLink
                                     to="/my-applications"
@@ -54,6 +59,7 @@ export default function App() {
                                 Profile
                             </NavLink>
 
+                            {/* Admin-only links */}
                             {user?.is_admin && (
                                 <>
                                     <NavLink
@@ -86,6 +92,7 @@ export default function App() {
                         </>
                     )}
 
+                    {/* Guest links */}
                     {!isAuthenticated && (
                         <>
                             <NavLink
@@ -103,6 +110,7 @@ export default function App() {
                         </>
                     )}
 
+                    {/* Logout link */}
                     {isAuthenticated && (
                         <a href="/" onClick={handleLogout} data-cy="logout-link">
                             Logout
@@ -111,10 +119,12 @@ export default function App() {
                 </div>
             </nav>
 
+            {/* Main content area */}
             <main className="container-narrow">
                 <Outlet />
             </main>
 
+            {/* Toast notification container */}
             <div id="toast" className="toast" />
         </>
     );

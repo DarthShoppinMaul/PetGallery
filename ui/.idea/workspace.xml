@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b00ffbd-7a02-4a67-b8ea-3de55b5fc5ba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../pythonapi/app/ems.db" beforeDir="false" afterPath="$PROJECT_DIR$/../pythonapi/app/ems.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/e2e/applications.cy.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/e2e/applications.cy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/e2e/auth.cy.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/e2e/auth.cy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/e2e/favorites-users-locations.cy.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/e2e/favorites-users-locations.cy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/e2e/pets.cy.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/e2e/pets.cy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +39,7 @@
     "Cypress.all tests in application.cy.js.executor": "Run",
     "Cypress.all tests in applications.cy.js.executor": "Run",
     "Cypress.all tests in auth.cy.js.executor": "Run",
+    "Cypress.all tests in integration.cy.js.executor": "Run",
     "Cypress.all tests in locations.cy.js.executor": "Run",
     "Cypress.all tests in login.cy.js.executor": "Run",
     "Cypress.all tests in navigation.cy.js.executor": "Run",
@@ -80,17 +78,7 @@
       <recent name="C:\Users\over_\CWEB\CWEB280Project\ui\src\react\pages" />
     </key>
   </component>
-  <component name="RunManager" selected="Cypress.all tests in pets.cy.js">
-    <configuration name="all tests in adminreview.cy.js" type="JavaScriptTestRunnerCypress" temporary="true">
-      <node-interpreter value="project" />
-      <cypress-package value="$PROJECT_DIR$/node_modules/cypress" />
-      <working-dir value="$PROJECT_DIR$" />
-      <cypress-options value="-q" />
-      <envs />
-      <scope-kind value="TEST_FILE" />
-      <test-file value="$PROJECT_DIR$/cypress/e2e/adminreview.cy.js" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Cypress.all tests in integration.cy.js">
     <configuration name="all tests in applications.cy.js" type="JavaScriptTestRunnerCypress" temporary="true">
       <node-interpreter value="project" />
       <cypress-package value="$PROJECT_DIR$/node_modules/cypress" />
@@ -109,6 +97,16 @@
       <envs />
       <scope-kind value="TEST_FILE" />
       <test-file value="$PROJECT_DIR$/cypress/e2e/auth.cy.js" />
+      <method v="2" />
+    </configuration>
+    <configuration name="all tests in integration.cy.js" type="JavaScriptTestRunnerCypress" temporary="true">
+      <node-interpreter value="project" />
+      <cypress-package value="$PROJECT_DIR$/node_modules/cypress" />
+      <working-dir value="$PROJECT_DIR$" />
+      <cypress-options value="-q" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/cypress/e2e/integration.cy.js" />
       <method v="2" />
     </configuration>
     <configuration name="all tests in pets.cy.js" type="JavaScriptTestRunnerCypress" temporary="true">
@@ -133,11 +131,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cypress.all tests in integration.cy.js" />
         <item itemvalue="Cypress.all tests in pets.cy.js" />
         <item itemvalue="Cypress.all tests in auth.cy.js" />
         <item itemvalue="npm.dev" />
         <item itemvalue="Cypress.all tests in applications.cy.js" />
-        <item itemvalue="Cypress.all tests in adminreview.cy.js" />
       </list>
     </recent_temporary>
   </component>
